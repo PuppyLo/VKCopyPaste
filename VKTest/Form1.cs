@@ -27,13 +27,19 @@ namespace VKTest
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            richTextBox1.Text = Properties.Settings.Default.RichTextBox_Value;
 
         }
+        private void Form1_FormClosing(Object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.RichTextBox_Value = richTextBox1.Text;
+        Properties.Settings.Default.Save();}
 
         public void Authorization()
         {
             vkapi.Authorize(new ApiAuthParams()
             {
+                AccessToken = "04442bbe00da2bd8d28e84ec0c36f303e2b662ac57a375351a77bb833816516954e2c336f21c0a1dbd728",
                 Login = "+79777243865",
                 Password = "AMG_FOREVER^^&@141",
                 ApplicationId = 7847742,
@@ -41,7 +47,7 @@ namespace VKTest
             });
         }
         
-        public void VKGetBYIdInfo()
+        /* public void VKGetBYIdInfo()
         {
             string GroupOtkyda = txt_otkeda.Text;
 
@@ -52,7 +58,7 @@ namespace VKTest
                 GroupName.Text = item.Name;
                 GroupAva.Load(item.Photo200.AbsoluteUri);
             }
-        }
+        } */
 
         public async Task<string> VKwallGet()
         {
@@ -61,34 +67,56 @@ namespace VKTest
             ulong Offset = Convert.ToUInt64(txt_offset.Text);
             ulong CountPost = Convert.ToUInt64(txt_count.Text);
 
+            //
+            int c = int.Parse(textBox1.Text);
+            string[] sNums = richTextBox1.Text.Split(',');
+
+            if (c > sNums.Length)
+            {
+                MessageBox.Show("Длина массива не соответсвует введенному!");
+            }
 
             var URLList = new List<string>();
 
-            var getwall = await vkapi.Wall.GetAsync(new WallGetParams{Count = CountPost, OwnerId = -1 * GroupOtkyda, Extended = true,Offset = Offset , Filter = VkNet.Enums.SafetyEnums.WallFilter.All});
 
-            foreach (var item in getwall.WallPosts)
+
+            int[] nums = new int[c];
+
+            for (int j = 0; j < c; j++)
             {
-                if (item.Attachments.Any())
+                nums[j] = int.Parse(sNums[j]);
+
+                //
+
+
+
+                var getwall = await vkapi.Wall.GetAsync(new WallGetParams { Count = CountPost, OwnerId = -1 * nums[j], Extended = true, Offset = Offset, Filter = VkNet.Enums.SafetyEnums.WallFilter.All });
+
+
+                foreach (var item in getwall.WallPosts)
                 {
-                    for (int i = 0; i < item.Attachments.Count; i++)
+                    if (item.Attachments.Any())
                     {
-                        if (item.Attachments[i].Instance is Photo photo)
+                        for (int i = 0; i < item.Attachments.Count; i++)
                         {
-                            Photo items = (Photo)item.Attachments[i].Instance;
-                            List<Photo> photos = getwall.WallPosts.Select(x => x.Attachments.FirstOrDefault()?.Instance).OfType<Photo>().ToList();
+                            if (item.Attachments[i].Instance is Photo photo)
+                            {
+                                Photo items = (Photo)item.Attachments[i].Instance;
+                                List<Photo> photos = getwall.WallPosts.Select(x => x.Attachments.FirstOrDefault()?.Instance).OfType<Photo>().ToList();
 
-                            string phLink = (item.Attachments[i].Instance as Photo)?.Sizes[6].Url.ToString();
-                            URLList.Add(phLink);
+                                string phLink = (item.Attachments[i].Instance as Photo)?.Sizes[6].Url.ToString();
+                                URLList.Add(phLink);
 
-                            WebClient wc = new WebClient();
-                            System.Drawing.Image img = new Bitmap(wc.OpenRead(phLink));
+                                WebClient wc = new WebClient();
+                                System.Drawing.Image img = new Bitmap(wc.OpenRead(phLink));
 
-                            dataGridView1.Rows.Add(false, item.ToString(), item.Text, img, item.Attachments[i].Instance.Id);
+                                dataGridView1.Rows.Add(false, item.OwnerId , item.Text, img, item.Attachments[i].Instance.Id, item.Date);
+                            }
                         }
                     }
                 }
             }
-             return URLList.ToString();
+            return URLList.ToString();
         }
 
         public async void VKWallPost()
@@ -118,7 +146,7 @@ namespace VKTest
                             OwnerId = -1 * GroupKyda,
                             FromGroup = true,
                             PublishDate = date,
-                            Message = "#hentai_ka" + Variable.DataGridView[2, i].Value.ToString(),
+                            Message = "#hentai_ka", //+ Variable.DataGridView[2, i].Value.ToString(),
                             Attachments = new List<MediaAttachment> { new Photo { OwnerId = -1 * GroupOtkyda, Id = (Convert.ToInt64(Variable.DataGridView[4, i].Value.ToString())) } }
                         }); ;
 
@@ -133,18 +161,11 @@ namespace VKTest
             }
         }
 
-        public static double UnixEncoding(DateTime date)
-        {
-            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            TimeSpan diff = date - origin;
-            return Math.Floor(diff.TotalSeconds);
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             Variable.DataGridView = dataGridView1;
             Authorization();
-            VKGetBYIdInfo();
+            //VKGetBYIdInfo();
             VKwallGet();
         }
 
