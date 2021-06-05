@@ -27,7 +27,7 @@ namespace VKTest
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            richTextBox1.Text = Properties.Settings.Default.RichTextBox_Value;
+             richTextBox1.Text = Properties.Settings.Default.RichTextBox_Value;
 
         }
         private void Form1_FormClosing(Object sender, FormClosingEventArgs e)
