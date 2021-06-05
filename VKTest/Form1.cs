@@ -21,19 +21,20 @@ namespace VKTest
         public Form1()
         {
             InitializeComponent();
+            txt_time.Text = (1+DateTime.Now.Hour).ToString();
 
-            string GroupOtkyda = txt_otkeda.Text;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-             richTextBox1.Text = Properties.Settings.Default.RichTextBox_Value;
+            richTextBox1.Text = Properties.Settings.Default.RichTextBox_Value;
 
         }
         private void Form1_FormClosing(Object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.RichTextBox_Value = richTextBox1.Text;
-        Properties.Settings.Default.Save();}
+            Properties.Settings.Default.Save();
+        }
 
         public void Authorization()
         {
@@ -46,23 +47,22 @@ namespace VKTest
                 Settings = Settings.All
             });
         }
-        
-        /* public void VKGetBYIdInfo()
-        {
-            string GroupOtkyda = txt_otkeda.Text;
 
-            var group = vkapi.Groups.GetById(null, GroupOtkyda, GroupsFields.All);
+         public void VKGetBYIdInfo()
+        {
+            string GroupKyda = txt_kyda.Text;
+
+            var group = vkapi.Groups.GetById(null, GroupKyda, GroupsFields.All);
 
             foreach (var item in group) 
             {
                 GroupName.Text = item.Name;
                 GroupAva.Load(item.Photo200.AbsoluteUri);
             }
-        } */
+        } 
 
         public async Task<string> VKwallGet()
         {
-            int GroupOtkyda = Convert.ToInt32(txt_otkeda.Text);
             int GroupKyda = Convert.ToInt32(txt_kyda.Text);
             ulong Offset = Convert.ToUInt64(txt_offset.Text);
             ulong CountPost = Convert.ToUInt64(txt_count.Text);
@@ -110,7 +110,7 @@ namespace VKTest
                                 WebClient wc = new WebClient();
                                 System.Drawing.Image img = new Bitmap(wc.OpenRead(phLink));
 
-                                dataGridView1.Rows.Add(false, item.OwnerId , item.Text, img, item.Attachments[i].Instance.Id, item.Date);
+                                dataGridView1.Rows.Add(false, item.OwnerId, item.Text, img, item.Attachments[i].Instance.Id, item.Date);
                             }
                         }
                     }
@@ -121,51 +121,43 @@ namespace VKTest
 
         public async void VKWallPost()
         {
-            int GroupOtkyda = Convert.ToInt32(txt_otkeda.Text);
             int GroupKyda = Convert.ToInt32(txt_kyda.Text);
-            double  addtime;
+            double addtime;
             DateTime date;
-            try
+
+            for (int i = 0; i < Variable.DataGridView.Rows.Count - 1; i++)
             {
-                for (int i = 0; i < Variable.DataGridView.Rows.Count - 1; i++)
+                addtime = i;
+                addtime += Convert.ToDouble(txt_time.Text);
+                date = new DateTime();
+                date = DateTime.Today.AddHours(addtime);
+
+                if (dataGridView1.Rows[i].Cells[0].Value.ToString() == "True")
                 {
-
-
-                    if (dataGridView1.Rows[i].Cells[0].Value.ToString() == "True")
+                    WebClient wc = new WebClient();
+                    await vkapi.Wall.PostAsync(new WallPostParams
                     {
-
-                        addtime = i;
-                        addtime += Convert.ToDouble(txt_time.Text);
-                        date = new DateTime();
-                        date = DateTime.Today.AddHours(addtime);
-
-
-                        WebClient wc = new WebClient();
-                        await vkapi.Wall.PostAsync(new WallPostParams
-                        {
-                            OwnerId = -1 * GroupKyda,
-                            FromGroup = true,
-                            PublishDate = date,
-                            Message = "#hentai_ka", //+ Variable.DataGridView[2, i].Value.ToString(),
-                            Attachments = new List<MediaAttachment> { new Photo { OwnerId = -1 * GroupOtkyda, Id = (Convert.ToInt64(Variable.DataGridView[4, i].Value.ToString())) } }
-                        }); ;
-
-                    }
-
-                    Thread.Sleep(1000);
+                        OwnerId = -1 * GroupKyda,
+                        FromGroup = true,
+                        PublishDate = date,
+                        Copyright = "pixiv.net",
+                        Message = "#hentai_ka", //+ Variable.DataGridView[2, i].Value.ToString(),
+                        Attachments = new List<MediaAttachment> { new Photo { OwnerId = Convert.ToInt64(Variable.DataGridView[1, i].Value.ToString()), Id = (Convert.ToInt64(Variable.DataGridView[4, i].Value.ToString())) } }
+                    }); ;
                 }
-            }
-            catch
-            {
-                MessageBox.Show("ошибка"); //сообщение об ошибке
+                Thread.Sleep(1000);
             }
         }
+    
+        
 
         private void button1_Click(object sender, EventArgs e)
         {
             Variable.DataGridView = dataGridView1;
+            string[] sNums = richTextBox1.Text.Split(',');
+            textBox1.Text = Convert.ToString(sNums.Length);
             Authorization();
-            //VKGetBYIdInfo();
+            VKGetBYIdInfo();
             VKwallGet();
         }
 
@@ -174,6 +166,11 @@ namespace VKTest
             VKWallPost();
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            int delet = dataGridView1.SelectedCells[0].RowIndex;
+            dataGridView1.Rows.RemoveAt(delet);
+        }
     }
 }
 
