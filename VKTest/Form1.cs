@@ -171,6 +171,14 @@ namespace VKTest
             int delet = dataGridView1.SelectedCells[0].RowIndex;
             dataGridView1.Rows.RemoveAt(delet);
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < Variable.DataGridView.Rows.Count - 1; i++)
+            {
+                dataGridView1.Rows[i].Cells[0].Value = 1;
+            }    
+        }
     }
 }
 
