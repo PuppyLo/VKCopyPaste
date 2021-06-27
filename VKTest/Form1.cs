@@ -22,14 +22,13 @@ namespace VKTest
         {
             InitializeComponent();
             txt_time.Text = (1+DateTime.Now.Hour).ToString();
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             richTextBox1.Text = Properties.Settings.Default.RichTextBox_Value;
-
         }
+
         private void Form1_FormClosing(Object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.RichTextBox_Value = richTextBox1.Text;
@@ -48,7 +47,7 @@ namespace VKTest
             });
         }
 
-         public void VKGetBYIdInfo()
+        public void VKGetBYIdInfo()
         {
             string GroupKyda = txt_kyda.Text;
 
@@ -67,18 +66,10 @@ namespace VKTest
             ulong Offset = Convert.ToUInt64(txt_offset.Text);
             ulong CountPost = Convert.ToUInt64(txt_count.Text);
 
-            //
             int c = int.Parse(textBox1.Text);
             string[] sNums = richTextBox1.Text.Split(',');
 
-            if (c > sNums.Length)
-            {
-                MessageBox.Show("Длина массива не соответсвует введенному!");
-            }
-
             var URLList = new List<string>();
-
-
 
             int[] nums = new int[c];
 
@@ -86,12 +77,7 @@ namespace VKTest
             {
                 nums[j] = int.Parse(sNums[j]);
 
-                //
-
-
-
                 var getwall = await vkapi.Wall.GetAsync(new WallGetParams { Count = CountPost, OwnerId = -1 * nums[j], Extended = true, Offset = Offset, Filter = VkNet.Enums.SafetyEnums.WallFilter.All });
-
 
                 foreach (var item in getwall.WallPosts)
                 {
@@ -110,7 +96,7 @@ namespace VKTest
                                 WebClient wc = new WebClient();
                                 System.Drawing.Image img = new Bitmap(wc.OpenRead(phLink));
 
-                                dataGridView1.Rows.Add(false, item.OwnerId, item.Text, img, item.Attachments[i].Instance.Id, item.Date);
+                                dataGridView1.Rows.Add(false, item.OwnerId, item.Text, img, Convert.ToInt32(item.Attachments[i].Instance.Id), item.Date);
                             }
                         }
                     }
@@ -148,8 +134,6 @@ namespace VKTest
                 Thread.Sleep(1000);
             }
         }
-    
-        
 
         private void button1_Click(object sender, EventArgs e)
         {

@@ -60,7 +60,7 @@ namespace VKTest
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(1085, 12);
+            this.button1.Location = new System.Drawing.Point(759, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(100, 25);
             this.button1.TabIndex = 1;
@@ -84,7 +84,7 @@ namespace VKTest
             this.dataGridView1.Location = new System.Drawing.Point(9, 112);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 100;
-            this.dataGridView1.Size = new System.Drawing.Size(711, 625);
+            this.dataGridView1.Size = new System.Drawing.Size(711, 627);
             this.dataGridView1.TabIndex = 7;
             // 
             // Select
@@ -134,7 +134,7 @@ namespace VKTest
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(1085, 63);
+            this.button2.Location = new System.Drawing.Point(759, 63);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(100, 25);
             this.button2.TabIndex = 8;
@@ -258,10 +258,10 @@ namespace VKTest
             // richTextBox1
             // 
             this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.richTextBox1.Location = new System.Drawing.Point(726, 112);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(129, 230);
+            this.richTextBox1.Size = new System.Drawing.Size(129, 232);
             this.richTextBox1.TabIndex = 23;
             this.richTextBox1.Text = "193939494,\n67908441\n";
             // 
@@ -289,7 +289,7 @@ namespace VKTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1210, 749);
+            this.ClientSize = new System.Drawing.Size(884, 751);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.richTextBox1);
@@ -308,7 +308,7 @@ namespace VKTest
             this.Controls.Add(this.GroupAva);
             this.Controls.Add(this.GroupName);
             this.Controls.Add(this.label1);
-            this.MinimumSize = new System.Drawing.Size(800, 500);
+            this.MinimumSize = new System.Drawing.Size(900, 790);
             this.Name = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
