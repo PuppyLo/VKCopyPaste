@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using VkNet;
@@ -10,7 +11,6 @@ using VkNet.Enums.Filters;
 using VkNet.Model;
 using VkNet.Model.Attachments;
 using VkNet.Model.RequestParams;
-using System.Threading;
 
 namespace VKTest
 {
@@ -21,7 +21,7 @@ namespace VKTest
         public Form1()
         {
             InitializeComponent();
-            txt_time.Text = (1+DateTime.Now.Hour).ToString();
+            txt_time.Text = (1 + DateTime.Now.Hour).ToString();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -39,9 +39,9 @@ namespace VKTest
         {
             vkapi.Authorize(new ApiAuthParams()
             {
-                AccessToken = "04442bbe00da2bd8d28e84ec0c36f303e2b662ac57a375351a77bb833816516954e2c336f21c0a1dbd728",
-                Login = "+79777243865",
-                Password = "AMG_FOREVER^^&@141",
+                AccessToken = "d3370605d0b51ef1b119d5f9992e1ffca36b111166b7f3c0be498a31427346b3552cc20ccb5679b12cf28",
+               // Login = "+79017930178",
+               // Password = "AMG_FOREVER^^&@!$!",
                 ApplicationId = 7847742,
                 Settings = Settings.All
             });
@@ -53,12 +53,12 @@ namespace VKTest
 
             var group = vkapi.Groups.GetById(null, GroupKyda, GroupsFields.All);
 
-            foreach (var item in group) 
+            foreach (var item in group)
             {
                 GroupName.Text = item.Name;
                 GroupAva.Load(item.Photo200.AbsoluteUri);
             }
-        } 
+        }
 
         public async Task<string> VKwallGet()
         {
@@ -90,7 +90,7 @@ namespace VKTest
                                 Photo items = (Photo)item.Attachments[i].Instance;
                                 List<Photo> photos = getwall.WallPosts.Select(x => x.Attachments.FirstOrDefault()?.Instance).OfType<Photo>().ToList();
 
-                                string phLink = (item.Attachments[i].Instance as Photo)?.Sizes[6].Url.ToString();
+                                string  phLink = (item.Attachments[i].Instance as Photo)?.Sizes[6].Url.ToString();
                                 URLList.Add(phLink);
 
                                 WebClient wc = new WebClient();
@@ -101,6 +101,7 @@ namespace VKTest
                         }
                     }
                 }
+                Thread.Sleep(1000);
             }
             return URLList.ToString();
         }
@@ -114,12 +115,10 @@ namespace VKTest
             for (int i = 0; i < Variable.DataGridView.Rows.Count - 1; i++)
             {
                 addtime = i;
-                addtime += Convert.ToDouble(txt_time.Text);
+                addtime += i + Convert.ToDouble(txt_time.Text);
                 date = new DateTime();
                 date = DateTime.Today.AddHours(addtime);
 
-                if (dataGridView1.Rows[i].Cells[0].Value.ToString() == "True")
-                {
                     WebClient wc = new WebClient();
                     await vkapi.Wall.PostAsync(new WallPostParams
                     {
@@ -129,8 +128,7 @@ namespace VKTest
                         Copyright = "pixiv.net",
                         Message = "#hentai_ka", //+ Variable.DataGridView[2, i].Value.ToString(),
                         Attachments = new List<MediaAttachment> { new Photo { OwnerId = Convert.ToInt64(Variable.DataGridView[1, i].Value.ToString()), Id = (Convert.ToInt64(Variable.DataGridView[4, i].Value.ToString())) } }
-                    }); ;
-                }
+                    }); 
                 Thread.Sleep(1000);
             }
         }
@@ -161,7 +159,7 @@ namespace VKTest
             for (int i = 0; i < Variable.DataGridView.Rows.Count - 1; i++)
             {
                 dataGridView1.Rows[i].Cells[0].Value = 1;
-            }    
+            }
         }
     }
 }
