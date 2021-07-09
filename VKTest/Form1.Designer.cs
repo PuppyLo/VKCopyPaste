@@ -53,6 +53,7 @@ namespace VKTest
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.CountImage = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GroupAva)).BeginInit();
             this.SuspendLayout();
@@ -285,11 +286,19 @@ namespace VKTest
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
+            // CountImage
+            // 
+            this.CountImage.Location = new System.Drawing.Point(726, 406);
+            this.CountImage.Name = "CountImage";
+            this.CountImage.Size = new System.Drawing.Size(100, 20);
+            this.CountImage.TabIndex = 26;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 751);
+            this.Controls.Add(this.CountImage);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.richTextBox1);
@@ -344,6 +353,7 @@ namespace VKTest
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.TextBox CountImage;
     }
 }
 
