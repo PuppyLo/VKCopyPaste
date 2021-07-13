@@ -20,10 +20,12 @@ namespace VKTest
     {
         VkApi vkapi = new VkApi();
 
+
+
         public Form1()
         {
             InitializeComponent();
-            txt_time.Text = (1 + DateTime.Now.Hour).ToString();
+
             Variable.DataGridView = dataGridView1;
 
             Environment.CurrentDirectory = @"D:\utorrent\VK\Image\";
@@ -49,11 +51,11 @@ namespace VKTest
         {
             vkapi.Authorize(new ApiAuthParams()
             {
-                AccessToken = "d3370605d0b51ef1b119d5f9992e1ffca36b111166b7f3c0be498a31427346b3552cc20ccb5679b12cf28",
+                AccessToken = "2943f696837fb2befcf3132463b0774282a8b0bf2d43dabb2edccca8cf83605618d7d5e6262b3b105f992",
                 // Login = "+79017930178",
                 // Password = "AMG_FOREVER^^&@!$!",
-                ApplicationId = 7847742,
-                Settings = Settings.All
+                //ApplicationId = 7847742,
+                //Settings = Settings.All
             });
         }
 
@@ -72,6 +74,7 @@ namespace VKTest
 
         public async Task<string> WallGet()
         {
+            System.Drawing.Image img;
             ulong Offset = Convert.ToUInt64(txt_offset.Text);
             ulong CountPost = Convert.ToUInt64(txt_count.Text);
 
@@ -103,16 +106,18 @@ namespace VKTest
                                 URLList.Add(phLink);
 
                                 WebClient wc = new WebClient();
-                                System.Drawing.Image img = new Bitmap(wc.OpenRead(phLink));
+                                img = new Bitmap(wc.OpenRead(phLink));
 
-                                dataGridView1.Rows.Add(false, item.OwnerId, item.Text, img, Convert.ToInt32(item.Attachments[i].Instance.Id), item.Date);
+                                // dataGridView1.Rows.Add(false, item.OwnerId, item.Text, img, Convert.ToInt32(item.Attachments[i].Instance.Id), item.Date);
 
                                 img.Save(item.Attachments[i].Instance.Id + ".png", System.Drawing.Imaging.ImageFormat.Png);
                             }
                         }
                     }
                 }
+
                 Thread.Sleep(1000);
+
             }
             return URLList.ToString();
         }
@@ -157,7 +162,7 @@ namespace VKTest
                 addtime += i * 30;
                 //addtime += Convert.ToDouble(txt_time.Text);
                 date = new DateTime();
-                date = DateTime.Now.AddMinutes(addtime);
+                date = DateTime.Now.AddDays(Convert.ToDouble(txt_Day.Text)).AddHours(Convert.ToDouble(txt_Hour.Text)).AddMinutes(addtime);
 
                 var wc = new WebClient();
 
@@ -165,7 +170,7 @@ namespace VKTest
                 var upServer = vkapi.Photo.GetWallUploadServer(GroupKyda);
 
                 // Загрузить картинку на сервер VK.
-                var response = Encoding.ASCII.GetString(wc.UploadFile(upServer.UploadUrl, @"D:\utorrent\VK\Image\" + i + @".png"));
+                var response = Encoding.ASCII.GetString(wc.UploadFile(upServer.UploadUrl, @"D:\utorrent\VK\Image\  (" + i + @").png"));
 
                 // Сохранить загруженный файл
                 var photos = vkapi.Photo.SaveWallPhoto(response, null, Convert.ToUInt64(GroupKyda));
@@ -175,13 +180,41 @@ namespace VKTest
                 {
                     OwnerId = -GroupKyda, //Id группы
                     Attachments = photos, //Вложение
+                    FromGroup = true,
                     PublishDate = date,
                     Copyright = "pixiv.net",
                     Message = "#hentai_ka",
                 });
+
+                Thread.Sleep(1000);
             }
-            Thread.Sleep(1000);
         }
+
+        /*
+         * public void ReNameImage()
+        {
+            int number = 0;//переменная для добавления номера к файлу
+            string path = @"D:\utorrent\VK\Image\";
+            richTextBox2.Text += path;
+
+            DirectoryInfo my = new DirectoryInfo(path);
+            foreach (FileInfo o in my.GetFiles())
+                try
+                {
+                    {
+                        number++;//увеличиваем каждый раз номер 
+                        richTextBox2.Text += o.Name; ;//пишем в консоль названия найденных файлов
+                        string name = o.Name;
+                        File.Move(name, number + ".png");//само переименование
+                    }
+                }
+                catch
+                {
+                    return;
+                }
+
+        }
+        */
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -209,6 +242,13 @@ namespace VKTest
                 dataGridView1.Rows[i].Cells[0].Value = 1;
             }
         }
+
+        /*
+        private void button5_Click(object sender, EventArgs e)
+        {
+            ReNameImage();
+        }
+        */
     }
 
     class Variable

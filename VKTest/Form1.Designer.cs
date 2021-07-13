@@ -44,7 +44,7 @@ namespace VKTest
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.txt_time = new System.Windows.Forms.TextBox();
+            this.txt_Day = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txt_offset = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -54,6 +54,9 @@ namespace VKTest
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.CountImage = new System.Windows.Forms.TextBox();
+            this.txt_Hour = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GroupAva)).BeginInit();
             this.SuspendLayout();
@@ -192,20 +195,20 @@ namespace VKTest
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 35);
+            this.label4.Location = new System.Drawing.Point(726, 497);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(60, 13);
+            this.label4.Size = new System.Drawing.Size(33, 13);
             this.label4.TabIndex = 17;
-            this.label4.Text = "Корый час";
+            this.label4.Text = "+Час";
             // 
-            // txt_time
+            // txt_Day
             // 
-            this.txt_time.Location = new System.Drawing.Point(78, 32);
-            this.txt_time.Name = "txt_time";
-            this.txt_time.Size = new System.Drawing.Size(60, 20);
-            this.txt_time.TabIndex = 18;
-            this.txt_time.Text = "0";
-            this.txt_time.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txt_Day.Location = new System.Drawing.Point(812, 468);
+            this.txt_Day.Name = "txt_Day";
+            this.txt_Day.Size = new System.Drawing.Size(60, 20);
+            this.txt_Day.TabIndex = 18;
+            this.txt_Day.Text = "0";
+            this.txt_Day.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label5
             // 
@@ -233,6 +236,7 @@ namespace VKTest
             this.textBox1.TabIndex = 21;
             this.textBox1.Text = "12";
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox1.Visible = false;
             // 
             // GroupAva
             // 
@@ -288,16 +292,47 @@ namespace VKTest
             // 
             // CountImage
             // 
-            this.CountImage.Location = new System.Drawing.Point(726, 406);
+            this.CountImage.Location = new System.Drawing.Point(812, 406);
             this.CountImage.Name = "CountImage";
-            this.CountImage.Size = new System.Drawing.Size(100, 20);
+            this.CountImage.Size = new System.Drawing.Size(60, 20);
             this.CountImage.TabIndex = 26;
+            this.CountImage.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // txt_Hour
+            // 
+            this.txt_Hour.Location = new System.Drawing.Point(812, 494);
+            this.txt_Hour.Name = "txt_Hour";
+            this.txt_Hour.Size = new System.Drawing.Size(60, 20);
+            this.txt_Hour.TabIndex = 28;
+            this.txt_Hour.Text = "0";
+            this.txt_Hour.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(726, 471);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(40, 13);
+            this.label6.TabIndex = 29;
+            this.label6.Text = "+День";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(726, 409);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(82, 13);
+            this.label7.TabIndex = 30;
+            this.label7.Text = "Кол-во файлов";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 751);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.txt_Hour);
             this.Controls.Add(this.CountImage);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -305,7 +340,7 @@ namespace VKTest
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.txt_offset);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.txt_time);
+            this.Controls.Add(this.txt_Day);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -338,7 +373,7 @@ namespace VKTest
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txt_time;
+        private System.Windows.Forms.TextBox txt_Day;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txt_offset;
         private System.Windows.Forms.TextBox textBox1;
@@ -354,6 +389,9 @@ namespace VKTest
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.TextBox CountImage;
+        private System.Windows.Forms.TextBox txt_Hour;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
     }
 }
 
