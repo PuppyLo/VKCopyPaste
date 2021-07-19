@@ -51,11 +51,11 @@ namespace VKTest
         {
             vkapi.Authorize(new ApiAuthParams()
             {
-                AccessToken = "2943f696837fb2befcf3132463b0774282a8b0bf2d43dabb2edccca8cf83605618d7d5e6262b3b105f992",
-                // Login = "+79017930178",
-                // Password = "AMG_FOREVER^^&@!$!",
-                //ApplicationId = 7847742,
-                //Settings = Settings.All
+                //AccessToken = "2943f696837fb2befcf3132463b0774282a8b0bf2d43dabb2edccca8cf83605618d7d5e6262b3b105f992",
+                 Login = "+79017930178",
+                 Password = "AMG_FOREVER^^&@!$!",
+                ApplicationId = 7847742,
+                Settings = Settings.All
             });
         }
 
@@ -156,65 +156,66 @@ namespace VKTest
             double addtime;
             DateTime date;
 
-            for (int i = 1; i <= Convert.ToInt32(CountImage.Text); i++)
+            for (int i = 1, j = Convert.ToInt32(CountImage.Text); i <= Convert.ToInt32(CountImage.Text); i++, j--)
             {
-                addtime = i;
-                addtime += i * 30;
-                //addtime += Convert.ToDouble(txt_time.Text);
-                date = new DateTime();
-                date = DateTime.Now.AddDays(Convert.ToDouble(txt_Day.Text)).AddHours(Convert.ToDouble(txt_Hour.Text)).AddMinutes(addtime);
-
-                var wc = new WebClient();
-
-                // Получить адрес сервера для загрузки картинок в сообщении
-                var upServer = vkapi.Photo.GetWallUploadServer(GroupKyda);
-
-                // Загрузить картинку на сервер VK.
-                var response = Encoding.ASCII.GetString(wc.UploadFile(upServer.UploadUrl, @"D:\utorrent\VK\Image\  (" + i + @").png"));
-
-                // Сохранить загруженный файл
-                var photos = vkapi.Photo.SaveWallPhoto(response, null, Convert.ToUInt64(GroupKyda));
-
-                //Отправить сообщение с нашим вложением
-                vkapi.Wall.Post(new WallPostParams
+                try
                 {
-                    OwnerId = -GroupKyda, //Id группы
-                    Attachments = photos, //Вложение
-                    FromGroup = true,
-                    PublishDate = date,
-                    Copyright = "pixiv.net",
-                    Message = "#hentai_ka",
-                });
+                    addtime = i;
+                    addtime += i * 30;
+                    //addtime += Convert.ToDouble(txt_time.Text);
+                    date = new DateTime();
+                    date = DateTime.Now.AddDays(Convert.ToDouble(txt_Day.Text)).AddHours(Convert.ToDouble(txt_Hour.Text)).AddMinutes(addtime);
 
-                Thread.Sleep(1000);
+                    var wc = new WebClient();
+
+                    // Получить адрес сервера для загрузки картинок в сообщении
+                    var upServer = vkapi.Photo.GetWallUploadServer(GroupKyda);
+
+                    // Загрузить картинку на сервер VK.
+                    var response = Encoding.ASCII.GetString(wc.UploadFile(upServer.UploadUrl, @"D:\utorrent\VK\Image\ " + j + @".png"));
+
+                    // Сохранить загруженный файл
+                    var photos = vkapi.Photo.SaveWallPhoto(response, null, Convert.ToUInt64(GroupKyda));
+
+                    //Отправить сообщение с нашим вложением
+                    vkapi.Wall.Post(new WallPostParams
+                    {
+                        OwnerId = -GroupKyda, //Id группы
+                        Attachments = photos, //Вложение
+                        FromGroup = true,
+                        PublishDate = date,
+                        Copyright = "pixiv.net",
+                        Message = "#hentai_ka",
+                    });
+
+                    Thread.Sleep(1000);
+                }
+
+                catch
+                {
+                    break;
+                }
             }
         }
 
-        /*
-         * public void ReNameImage()
+
+        public void ReNameImage()
         {
+            string added = textBox2.Text;
             int number = 0;//переменная для добавления номера к файлу
             string path = @"D:\utorrent\VK\Image\";
-            richTextBox2.Text += path;
 
             DirectoryInfo my = new DirectoryInfo(path);
             foreach (FileInfo o in my.GetFiles())
-                try
-                {
-                    {
-                        number++;//увеличиваем каждый раз номер 
-                        richTextBox2.Text += o.Name; ;//пишем в консоль названия найденных файлов
-                        string name = o.Name;
-                        File.Move(name, number + ".png");//само переименование
-                    }
-                }
-                catch
-                {
-                    return;
-                }
+            {
+
+                number++;//увеличиваем каждый раз номер 
+                string name = o.Name;
+                File.Move(name, added + number + ".png");//само переименование
+            }
 
         }
-        */
+        
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -243,12 +244,10 @@ namespace VKTest
             }
         }
 
-        /*
         private void button5_Click(object sender, EventArgs e)
         {
             ReNameImage();
         }
-        */
     }
 
     class Variable

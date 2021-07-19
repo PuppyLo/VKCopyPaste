@@ -57,6 +57,8 @@ namespace VKTest
             this.txt_Hour = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.button5 = new System.Windows.Forms.Button();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GroupAva)).BeginInit();
             this.SuspendLayout();
@@ -325,11 +327,30 @@ namespace VKTest
             this.label7.TabIndex = 30;
             this.label7.Text = "Кол-во файлов";
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(795, 607);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(77, 32);
+            this.button5.TabIndex = 31;
+            this.button5.Text = "button5";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(726, 581);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 20);
+            this.textBox2.TabIndex = 32;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(884, 751);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txt_Hour);
@@ -392,6 +413,8 @@ namespace VKTest
         private System.Windows.Forms.TextBox txt_Hour;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }
 
