@@ -52,8 +52,8 @@ namespace VKTest
             vkapi.Authorize(new ApiAuthParams()
             {
                 //AccessToken = "2943f696837fb2befcf3132463b0774282a8b0bf2d43dabb2edccca8cf83605618d7d5e6262b3b105f992",
-                 Login = "+79017930178",
-                 Password = "AMG_FOREVER^^&@!$!",
+                Login = "+79017930178",
+                Password = "AMG_FOREVER^^&@!$!",
                 ApplicationId = 7847742,
                 Settings = Settings.All
             });
@@ -158,7 +158,7 @@ namespace VKTest
 
             for (int i = 1, j = Convert.ToInt32(CountImage.Text); i <= Convert.ToInt32(CountImage.Text); i++, j--)
             {
-                try
+                //try
                 {
                     addtime = i;
                     addtime += i * 30;
@@ -188,22 +188,27 @@ namespace VKTest
                         Message = "#hentai_ka",
                     });
 
+                    File.Delete(@"D:\utorrent\VK\Image\ " + j + @".png");
+
+
                     Thread.Sleep(1000);
                 }
-
-                catch
+               /* catch
                 {
+                    MessageBox.Show("ERRORRR");
                     break;
-                }
+                }*/
             }
         }
+    
+        
 
 
         public void ReNameImage()
         {
             string added = textBox2.Text;
             int number = 0;//переменная для добавления номера к файлу
-            string path = @"D:\utorrent\VK\Image\";
+            string path = @"D:\utorrent\VK\Image\"; 
 
             DirectoryInfo my = new DirectoryInfo(path);
             foreach (FileInfo o in my.GetFiles())
