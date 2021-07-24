@@ -269,7 +269,7 @@ namespace MonteceVkBot
 
         #region Commands
 
-        static string[] Commands = { "помощь", "мем", "случайное число <Мин> <Макс>", "новости", "учи~<Сообщение>~<Ответ>" };
+        static string[] Commands = { "помощь", "хентай", "случайное число <Мин> <Макс>", "новости", "учи~<Сообщение>~<Ответ>" };
 
         static void Command(string Message)
         {
@@ -286,8 +286,8 @@ namespace MonteceVkBot
                         for (int j = 0; j < Commands.Length; j++) msg += Commands[j] + ", ";
                         SendMessage(msg);
                         break;
-                    case "мем":
-                        SendMessage(Bash());
+                    case "хентай":
+                        Hentai();
                         break;
                     case "новости":
                         SendMessage(News("https://lenta.ru/rss/top7"));
@@ -324,20 +324,28 @@ namespace MonteceVkBot
             return "";
         }
 
-        public static string Bash()
+        public static void Hentai()
         {
-            HttpWebRequest Req = (HttpWebRequest)WebRequest.Create("http://bash.im/forweb/");
-            string BashText = new StreamReader(Req.GetResponse().GetResponseStream(), Encoding.Default).ReadToEnd();
-            string Title = BashText.Substring(BashText.IndexOf("href") + 6, 27) + Environment.NewLine;
-            Title = "Цитата #" + Title.Substring(21, Title.Length - 21);
-            BashText = BashText.Replace("<' + 'br>", Environment.NewLine);
-            BashText = BashText.Replace("< ' + 'br />", Environment.NewLine);
-            BashText = BashText.Replace("< ' + 'br /> &lt; x84 & gt;", "");
-            BashText = BashText.Replace("&quot;", "\"");
-            BashText = BashText.Replace("&lt;", "<");
-            BashText = BashText.Replace("&gt;", ">");
-            BashText = BashText.Substring(BashText.IndexOf("0;") + 4, BashText.IndexOf("document.write(borq);") - 352);
-            return Title + BashText;
+            var random = new Random();
+            var randomImage = random.Next(1, new DirectoryInfo(@"D:\utorrent\VK\Image\").GetFiles().Length);
+
+            var wc = new WebClient();
+            // Получить адрес сервера для загрузки картинок в сообщении
+            var uploadServer = vkapi.Photo.GetMessagesUploadServer(userID);
+
+            // Загрузить картинку на сервер VK.
+            var response = Encoding.ASCII.GetString(wc.UploadFile(uploadServer.UploadUrl, @"D:\utorrent\VK\Image\ " + randomImage + @".png"));
+
+            // Сохранить загруженный файл
+            var attachment = vkapi.Photo.SaveMessagesPhoto(response);
+
+            vkapi.Messages.Send(new MessagesSendParams
+            {
+                UserId = userID, //Id получателя
+                //Message = "Message", //Сообщение
+                Attachments = attachment, //Вложение
+                RandomId = new Random().Next(999999) //Уникальный идентификатор
+            });
         }
 
         public static string News(string url)
