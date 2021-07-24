@@ -119,22 +119,13 @@ namespace MonteceVkBot
         {
             try
             {
-                if (IsChat)
-                {
-                    vkapi.Messages.Send(new MessagesSendParams
-                    {
-                        ChatId = userID,
-                        Message = message
-                    });
-                }
-                else
-                {
                     vkapi.Messages.Send(new MessagesSendParams
                     {
                         UserId = userID,
-                        Message = message
+                        Message = message,
+                        RandomId = new Random().Next(999999)
                     });
-                }
+                
             }
             catch (Exception e)
             {
@@ -156,7 +147,7 @@ namespace MonteceVkBot
         static void EyeInit()
         {
             LongPollServerResponse Pool = vkapi.Messages.GetLongPollServer(true);
-            StartAsync(Pool.Ts, Pool.Pts);
+            StartAsync((ulong?)Convert.ToInt64(Pool.Ts), Pool.Pts);
             NewMessages += MonteceVkBot_NewMessages;
             vkapi.OnTokenExpires += MonteceVkBot_Logout;
             ColorMessage("Слежение за сообщениями активировано.", ConsoleColor.Yellow);
@@ -167,23 +158,14 @@ namespace MonteceVkBot
             Console.Beep();
             for (int i = 0; i < messages.Count; i++)
             {
-                if (messages[i].Type != MessageType.Sended && messages[i].Body.Contains(BotCommandSuf))
+                if (messages[i].Type != MessageType.Sended && messages[i].Text.Contains(BotCommandSuf))
                 {
-                    string MSG = messages[i].Body.Substring(BotCommandSuf.Length);
-                    if (messages[i].ChatId != null)
-                    {
-                        string Chat = vkapi.Messages.GetChat(messages[i].ChatId.Value).Title;
-                        Console.WriteLine("Новое сообщение из беседы: {0}: {1}", Chat, messages[i].Body);
-                        userID = messages[i].ChatId.Value;
-                        IsChat = true;
-                    }
-                    else
-                    {
-                        User Sender = vkapi.Users.Get(messages[i].UserId.Value);
-                        Console.WriteLine("Новое сообщение: {0} {1}: {2}", Sender.FirstName, Sender.LastName, messages[i].Body);
-                        userID = messages[i].UserId.Value;
-                        IsChat = false;
-                    }
+                    string MSG = messages[i].Text.Substring(BotCommandSuf.Length);
+                    userID = messages[i].PeerId.Value;
+
+                    var Name = vkapi.Users.Get(new long[] { userID }).FirstOrDefault();
+                    Console.WriteLine("Новое сообщение: {0} {1} : {2} ", Name.FirstName,Name.LastName, messages[i].Text);
+                    
                     Console.Beep();
                     Command(MSG);
                 }
@@ -192,8 +174,8 @@ namespace MonteceVkBot
 
         static LongPollServerResponse GetLongPoolServer(ulong? lastPts = null)
         {
-            LongPollServerResponse response = vkapi.Messages.GetLongPollServer(false, lastPts == null);
-            Ts = response.Ts;
+            LongPollServerResponse response = vkapi.Messages.GetLongPollServer(false);
+            Ts = (ulong)Convert.ToInt64(response.Ts);
             Pts = Pts == null ? response.Pts : lastPts;
             return response;
         }
