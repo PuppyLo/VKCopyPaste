@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MonteceVkBot
+namespace ConsoleApp1
 
 {
     class Program

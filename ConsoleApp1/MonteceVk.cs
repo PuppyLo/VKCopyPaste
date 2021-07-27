@@ -16,7 +16,7 @@ using VkNet.Exception;
 using VkNet.Model;
 using VkNet.Model.RequestParams;
 
-namespace MonteceVkBot
+namespace ConsoleApp1
 {
     class MonteceVk
     {
