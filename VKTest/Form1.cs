@@ -190,9 +190,7 @@ namespace VKTest
 
                     File.Delete(@"D:\utorrent\VK\Image\ " + j + @".png");
 
-
-                    Thread.Sleep(1000);
-                }
+                    TimeSpan.FromMinutes(30);                }
                /* catch
                 {
                     MessageBox.Show("ERRORRR");
