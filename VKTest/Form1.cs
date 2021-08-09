@@ -108,8 +108,6 @@ namespace VKTest
                                 WebClient wc = new WebClient();
                                 img = new Bitmap(wc.OpenRead(phLink));
 
-                                // dataGridView1.Rows.Add(false, item.OwnerId, item.Text, img, Convert.ToInt32(item.Attachments[i].Instance.Id), item.Date);
-
                                 img.Save(item.Attachments[i].Instance.Id + ".png", System.Drawing.Imaging.ImageFormat.Png);
                             }
                         }
@@ -121,33 +119,6 @@ namespace VKTest
             }
             return URLList.ToString();
         }
-
-        /* public async void VKWallPost()
-         {
-             int GroupKyda = Convert.ToInt32(txt_kyda.Text);
-             double addtime;
-             DateTime date;
-
-             for (int i = 0; i < Variable.DataGridView.Rows.Count - 1; i++)
-             {
-                 addtime = i;
-                 addtime += i + Convert.ToDouble(txt_time.Text);
-                 date = new DateTime();
-                 date = DateTime.Today.AddHours(addtime);
-
-                     WebClient wc = new WebClient();
-                     await vkapi.Wall.PostAsync(new WallPostParams
-                     {
-                         OwnerId = -1 * GroupKyda,
-                         FromGroup = true,
-                         PublishDate = date,
-                         Copyright = "pixiv.net",
-                         Message = "#hentai_ka", //+ Variable.DataGridView[2, i].Value.ToString(),
-                         Attachments = new List<MediaAttachment> { new Photo { OwnerId = Convert.ToInt64(Variable.DataGridView[1, i].Value.ToString()), Id = (Convert.ToInt64(Variable.DataGridView[4, i].Value.ToString())) } }
-                     }); 
-                 Thread.Sleep(1000);
-             }
-         }*/
 
         public void WallPost()
         {
@@ -190,8 +161,8 @@ namespace VKTest
 
                     File.Delete(@"D:\utorrent\VK\Image\ " + j + @".png");
 
-                    //var time = TimeSpan.FromMinutes(30);
-                    Thread.Sleep(2000);
+                    var time = TimeSpan.FromMinutes(30);
+                    Thread.Sleep(1000);
                 }
                /* catch
                 {
