@@ -25,6 +25,7 @@ namespace VKTest
     {
         VkApi vkapi = new VkApi();
 
+
         public Form1()
         {
             InitializeComponent();
@@ -32,18 +33,19 @@ namespace VKTest
             Authorization();
 
             Environment.CurrentDirectory = Properties.Settings.Default.PathDirectory_Value;
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            richTextBox1.Text = Properties.Settings.Default.RichTextBox_Value;
-            textBox3.Text = Properties.Settings.Default.PathDirectory_Value;
+            txt_GroupWallGetOwnerID.Text = Properties.Settings.Default.RichTextBox_Value;
+            txt_SelectFolder.Text = Properties.Settings.Default.PathDirectory_Value;
         }
 
         private void Form1_FormClosing(Object sender, FormClosingEventArgs e)
         {
-            Properties.Settings.Default.RichTextBox_Value = richTextBox1.Text;
-            Properties.Settings.Default.PathDirectory_Value = textBox3.Text;
+            Properties.Settings.Default.RichTextBox_Value = txt_GroupWallGetOwnerID.Text;
+            Properties.Settings.Default.PathDirectory_Value = txt_SelectFolder.Text;
             Properties.Settings.Default.Save();
         }
 
@@ -59,24 +61,21 @@ namespace VKTest
             });
         }
 
+        #region Wall Get&Post
+
         public async Task<string> WallGet()
         {
             System.Drawing.Image img;
-            ulong Offset = Convert.ToUInt64(txt_offset.Text);
-            ulong CountPost = Convert.ToUInt64(txt_count.Text);
-
-
-            string[] sNums = richTextBox1.Text.Split(',');
+            var Offset = Convert.ToUInt64(txt_GroupWallGetOffset.Text);
+            var CountPost = Convert.ToUInt64(txt_GroupWallGetCount.Text);
 
             var URLList = new List<string>();
 
-            int[] nums = new int[Convert.ToInt32(sNums)];
+            int[] GroupCount = txt_GroupWallGetOwnerID.Text.Split(',').Select(int.Parse).ToArray();
 
-            for (int j = 0; j < Convert.ToInt32(sNums); j++)
+            for (int j = 0; j < GroupCount.Length; j++)
             {
-                nums[j] = int.Parse(sNums[j]);
-
-                var getwall = await vkapi.Wall.GetAsync(new WallGetParams { Count = CountPost, OwnerId = -nums[j], Extended = true, Offset = Offset, Filter = VkNet.Enums.SafetyEnums.WallFilter.All });
+                var getwall = await vkapi.Wall.GetAsync(new WallGetParams { Count = CountPost, OwnerId = -GroupCount[j], Extended = true, Offset = Offset, Filter = VkNet.Enums.SafetyEnums.WallFilter.All });
 
                 foreach (var item in getwall.WallPosts)
                 {
@@ -95,7 +94,7 @@ namespace VKTest
                                 WebClient wc = new WebClient();
                                 img = new Bitmap(wc.OpenRead(phLink));
 
-                                img.Save(item.Attachments[i].Instance.Id + ".png", System.Drawing.Imaging.ImageFormat.Png);
+                                img.Save(txt_SelectFolder.Text + item.Attachments[i].Instance.Id + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
                             }
                         }
                     }
@@ -109,48 +108,41 @@ namespace VKTest
 
         public void WallPost()
         {
-            var GroupKyda = Convert.ToInt32(txt_kyda.Text);
-
+            var GroupKyda = Convert.ToInt64(txt_WallPostOwnerID.Text);
             var CountImage = new DirectoryInfo(Environment.CurrentDirectory).GetFiles().Length;
+            var Day = Convert.ToSByte(txt_WallPostDay.Text);
+            var Hour = Convert.ToSByte(txt_WallPostHours.Text);
 
-            double addtime;
+            float addtime;
             DateTime date;
 
-            for (int i = 1, j = CountImage - 2; i <= Convert.ToInt32(CountImage); i++, j--)
+            for (int i = 1, j = CountImage - 2; i <= CountImage; i++, j--)
             {
                 try
                 {
                     addtime = i;
                     addtime += i * 30;
-                    //addtime += Convert.ToDouble(txt_time.Text);
                     date = new DateTime();
-                    date = DateTime.Now.AddDays(Convert.ToDouble(txt_Day.Text)).AddHours(Convert.ToDouble(txt_Hour.Text)).AddMinutes(addtime);
+                    date = DateTime.Now.AddDays(Day).AddHours(Hour).AddMinutes(addtime);
 
                     var wc = new WebClient();
-
-                    // Получить адрес сервера для загрузки картинок в сообщении
                     var upServer = vkapi.Photo.GetWallUploadServer(GroupKyda);
+                    var response = Encoding.ASCII.GetString(wc.UploadFile(upServer.UploadUrl, txt_SelectFolder.Text + j + @".jpg"));
+                    var photos = vkapi.Photo.SaveWallPhoto(response, null, (ulong)GroupKyda);
 
-                    // Загрузить картинку на сервер VK.
-                    var response = Encoding.ASCII.GetString(wc.UploadFile(upServer.UploadUrl, textBox3.Text + j + @".jpg"));
-
-                    // Сохранить загруженный файл
-                    var photos = vkapi.Photo.SaveWallPhoto(response, null, Convert.ToUInt64(GroupKyda));
-
-                    //Отправить сообщение с нашим вложением
                     vkapi.Wall.Post(new WallPostParams
                     {
-                        OwnerId = -GroupKyda, //Id группы
-                        Attachments = photos, //Вложение
+                        OwnerId = -GroupKyda,
+                        Attachments = photos,
                         FromGroup = true,
                         PublishDate = date,
                         Copyright = "pixiv.net",
                         Message = "#hentai_ka",
                     });
 
-                    File.Delete(textBox3.Text + j + @".jpg");
+                    File.Delete(txt_SelectFolder.Text + j + @".jpg");
 
-                    var time = TimeSpan.FromMinutes(30);
+                    //var time = TimeSpan.FromMinutes(30);
                     Thread.Sleep(1000);
                 }
                 catch (Exception ex)
@@ -164,8 +156,6 @@ namespace VKTest
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string[] sNums = richTextBox1.Text.Split(',');
-
             WallGet();
         }
 
@@ -180,10 +170,10 @@ namespace VKTest
             using (var dialog = new FolderBrowserDialog())
                 if (dialog.ShowDialog() == DialogResult.OK)
                     path = dialog.SelectedPath;
-            textBox3.Text = path + @"\";
-            Environment.CurrentDirectory = textBox3.Text;
+            txt_SelectFolder.Text = path + @"\";
+            Environment.CurrentDirectory = txt_SelectFolder.Text;
         }
-
+        #endregion
 
         #region Bot
         //
@@ -198,8 +188,6 @@ namespace VKTest
         public bool IsChat = false;
         const string BotCommandSuf = "";
 
-
-
         public void Bot()
         {
             BotInitialization();
@@ -207,12 +195,9 @@ namespace VKTest
             LoadLibrary();
         }
 
-
-
-
         public void BotInitialization()
         {
-            Log( "Hentai-ka bot", null, null, null);
+            Log("Hentai-ka bot", null, null, null);
 
             Web = new WebClient();
             vkapi = new VkApi();
@@ -226,30 +211,23 @@ namespace VKTest
 
             try
             {
-                Log("Попытка авторизации..." + null,null,null,null);
+                Log("Попытка авторизации..." + null, null, null, null);
                 vkapi.Authorize(new ApiAuthParams { AccessToken = "3fccfa54ed7a5c8fa15ab967e127dd1027104adb8c2cce515faed7df6e5a2d329d7f5ea37e7fa90b60a6d" });
                 Start();
                 return true;
             }
             catch (Exception e)
             {
-                Log("Не удалось произвести авторизацию!" + Environment.NewLine + e.Message, null,null,null);
+                Log("Не удалось произвести авторизацию!" + Environment.NewLine + e.Message, null, null, null);
                 return false;
             }
         }
 
-
-
-
-
-
-
-
         private void Start()
         {
-            Log("Авторизация успешно завершена." + null, null , null,null);
+            Log("Авторизация успешно завершена." + null, null, null, null);
             EyeInit();
-            Log("Запросов в секунду доступно: " + vkapi.RequestsPerSecond + null, null, null,null);
+            Log("Запросов в секунду доступно: " + vkapi.RequestsPerSecond + null, null, null, null);
         }
 
         public void LoadLibrary()
@@ -259,15 +237,13 @@ namespace VKTest
                 Directory.CreateDirectory(CommandsPath);
                 File.Create(CommandsPath + @"\Commands.txt");
             }
-            else Log("Директория сообщений создана успешно загружена." + null, null, null,null);
+            else Log("Директория сообщений создана успешно загружена." + null, null, null, null);
         }
 
         public void MonteceVkBot_Logout(VkApi owner)
         {
-            Log( "Отключение от VK...", null, null, null);
+            Log("Отключение от VK...", null, null, null);
         }
-
-
 
         public void SendMessage(string message)
         {
@@ -283,7 +259,7 @@ namespace VKTest
             }
             catch (Exception e)
             {
-                Log( "Ошибка! " + e.Message,null,null,null);
+                Log("Ошибка! " + e.Message, null, null, null);
             }
         }
 
@@ -304,7 +280,7 @@ namespace VKTest
             StartAsync((ulong?)Convert.ToInt64(Pool.Ts), Pool.Pts);
             NewMessages += MonteceVkBot_NewMessages;
             vkapi.OnTokenExpires += MonteceVkBot_Logout;
-            Log("Слежение за сообщениями активировано.",null,null,null);
+            Log("Слежение за сообщениями активировано.", null, null, null);
         }
 
         public void MonteceVkBot_NewMessages(VkApi owner, ReadOnlyCollection<VkNet.Model.Message> messages)
@@ -318,7 +294,7 @@ namespace VKTest
                     userID = messages[i].PeerId.Value;
 
                     var Name = vkapi.Users.Get(new long[] { userID }).FirstOrDefault();
-                   Log("Новое сообщение: ", Name.FirstName.ToString() +" ", Name.LastName.ToString()+": ", messages[i].Text);
+                    Log("Новое сообщение: ", Name.FirstName.ToString() + " ", Name.LastName.ToString() + ": ", messages[i].Text);
 
                     Console.Beep();
                     Command(MSG);
@@ -378,7 +354,7 @@ namespace VKTest
                     m.FromId = m.Type == MessageType.Sended ? vkapi.UserId : m.UserId;
                 }
             }
-            else Log( errorLog, null, null, null);
+            else Log(errorLog, null, null, null);
             return history;
         }
 
@@ -401,12 +377,11 @@ namespace VKTest
 
         public async void StartAsync(ulong? lastTs = null, ulong? lastPts = null)
         {
-            if (IsActive) Log( "Messages for {0} already watching", null, null, null);
+            if (IsActive) Log("Messages for {0} already watching", null, null, null);
             IsActive = true;
             await GetLongPoolServerAsync(lastPts);
             WatchTimer = new System.Threading.Timer(new TimerCallback(WatchAsync), null, 0, Timeout.Infinite);
         }
-
 
         #endregion
 
@@ -535,24 +510,68 @@ namespace VKTest
 
         #endregion
 
-        public void Log(string _in1,string _in2,string _in3, string _in4)
+        public void Log(string _in1, string _in2, string _in3, string _in4)
         {
             if (IsHandleCreated)
             {
-                richTextBox2.Invoke(new Action(() => richTextBox2.Text += _in1+_in2+_in3+_in4 + "\n" + "***********" + "\n"));
+                txt_BotLog.Invoke(new Action(() => txt_BotLog.Text += _in1 + _in2 + _in3 + _in4 + "\n" + "***********" + "\n"));
             }
         }
-
-
-
-        //
-        #endregion
 
         private void button3_Click(object sender, EventArgs e)
         {
             Bot();
         }
+
+        //
+        #endregion
+
+        #region User Get Photo
+
+        private void btn_UserPhotoGet_Click(object sender, EventArgs e)
+        {
+
+            var photoGet = vkapi.Photo.GetAll(new PhotoGetAllParams { OwnerId = Convert.ToInt32(txt_UserPhotoOwnerID.Text), Count = (ulong)Convert.ToInt64(txt_UserPhotoCount.Text), Offset = (ulong)Convert.ToInt32(txt_UserPhotoOffset.Text) });
+
+            {
+                foreach (var photo in photoGet)
+                {
+                    for (int i = 8; i < 11; i++)
+                    {
+
+                        try
+                        {
+                            string phLink = photo?.Sizes[i].Url.ToString();
+
+                            WebClient wc = new WebClient();
+                            System.Drawing.Image img = new Bitmap(wc.OpenRead(phLink));
+
+                            img.Save(txt_SelectFolder.Text + photo.OwnerId + "_" + photo.Id + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                        }
+                        catch
+                        {
+                            continue;
+                        }
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region User Group
+
+        private void btn_UserGroup_Click(object sender, EventArgs e)
+        {
+            var groupGet = vkapi.Groups.Get(new GroupsGetParams { UserId = Convert.ToInt32(txt_UserGroupUserID.Text), Count = Convert.ToInt32(txt_UserGroupCount.Text), Offset = Convert.ToInt32(txt_UserGroupOffset.Text) });
+
+            foreach (var group in groupGet)
+            {
+                txt_UserGroupListOwnerID.Text += group.Id + "," + "\n";
+            }
+        }
+        #endregion
     }
+
 }
 
 
