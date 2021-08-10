@@ -34,5 +34,17 @@ namespace VKTest.Properties {
                 this["RichTextBox_Value"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PathDirectory_Value {
+            get {
+                return ((string)(this["PathDirectory_Value"]));
+            }
+            set {
+                this["PathDirectory_Value"] = value;
+            }
+        }
     }
 }

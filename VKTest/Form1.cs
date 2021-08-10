@@ -20,30 +20,26 @@ namespace VKTest
     {
         VkApi vkapi = new VkApi();
 
-
-
         public Form1()
         {
             InitializeComponent();
 
-            Variable.DataGridView = dataGridView1;
+            Environment.CurrentDirectory = textBox3.Text;
 
-            Environment.CurrentDirectory = @"D:\utorrent\VK\Image\";
-            CountImage.Text = new DirectoryInfo(@"D:\utorrent\VK\Image").GetFiles().Length.ToString();
 
-            Authorization();
-
-            VKGetBYIdInfo();
+            Authorization(); 
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             richTextBox1.Text = Properties.Settings.Default.RichTextBox_Value;
+            textBox3.Text = Properties.Settings.Default.PathDirectory_Value;
         }
 
         private void Form1_FormClosing(Object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.RichTextBox_Value = richTextBox1.Text;
+            Properties.Settings.Default.PathDirectory_Value = textBox3.Text;
             Properties.Settings.Default.Save();
         }
 
@@ -59,33 +55,20 @@ namespace VKTest
             });
         }
 
-        public void VKGetBYIdInfo()
-        {
-            string GroupKyda = txt_kyda.Text;
-
-            var group = vkapi.Groups.GetById(null, GroupKyda, GroupsFields.All);
-
-            foreach (var item in group)
-            {
-                GroupName.Text = item.Name;
-                GroupAva.Load(item.Photo200.AbsoluteUri);
-            }
-        }
-
         public async Task<string> WallGet()
         {
             System.Drawing.Image img;
             ulong Offset = Convert.ToUInt64(txt_offset.Text);
             ulong CountPost = Convert.ToUInt64(txt_count.Text);
 
-            int c = int.Parse(textBox1.Text);
+
             string[] sNums = richTextBox1.Text.Split(',');
 
             var URLList = new List<string>();
 
-            int[] nums = new int[c];
+            int[] nums = new int[Convert.ToInt32(sNums)];
 
-            for (int j = 0; j < c; j++)
+            for (int j = 0; j < Convert.ToInt32(sNums); j++)
             {
                 nums[j] = int.Parse(sNums[j]);
 
@@ -122,14 +105,16 @@ namespace VKTest
 
         public void WallPost()
         {
-            int GroupKyda = Convert.ToInt32(txt_kyda.Text);
+            var GroupKyda = Convert.ToInt32(txt_kyda.Text);
+
+            var CountImage = new DirectoryInfo(Environment.CurrentDirectory).GetFiles().Length;
 
             double addtime;
             DateTime date;
 
-            for (int i = 1, j = Convert.ToInt32(CountImage.Text); i <= Convert.ToInt32(CountImage.Text); i++, j--)
+            for (int i = 1, j = CountImage - 2; i <= Convert.ToInt32(CountImage); i++, j--)
             {
-                //try
+                try
                 {
                     addtime = i;
                     addtime += i * 30;
@@ -143,7 +128,7 @@ namespace VKTest
                     var upServer = vkapi.Photo.GetWallUploadServer(GroupKyda);
 
                     // Загрузить картинку на сервер VK.
-                    var response = Encoding.ASCII.GetString(wc.UploadFile(upServer.UploadUrl, @"D:\utorrent\VK\Image\ " + j + @".png"));
+                    var response = Encoding.ASCII.GetString(wc.UploadFile(upServer.UploadUrl, textBox3.Text + j + @".jpg"));
 
                     // Сохранить загруженный файл
                     var photos = vkapi.Photo.SaveWallPhoto(response, null, Convert.ToUInt64(GroupKyda));
@@ -159,44 +144,23 @@ namespace VKTest
                         Message = "#hentai_ka",
                     });
 
-                    File.Delete(@"D:\utorrent\VK\Image\ " + j + @".png");
+                    File.Delete(textBox3.Text + j + @".jpg");
 
                     var time = TimeSpan.FromMinutes(30);
                     Thread.Sleep(1000);
                 }
-               /* catch
+                catch (Exception ex)
                 {
-                    MessageBox.Show("ERRORRR");
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     break;
-                }*/
+                }
             }
+            
         }
-    
-        
-
-
-        public void ReNameImage()
-        {
-            string added = textBox2.Text;
-            int number = 0;//переменная для добавления номера к файлу
-            string path = @"D:\utorrent\VK\Image\"; 
-
-            DirectoryInfo my = new DirectoryInfo(path);
-            foreach (FileInfo o in my.GetFiles())
-            {
-
-                number++;//увеличиваем каждый раз номер 
-                string name = o.Name;
-                File.Move(name, added + number + ".png");//само переименование
-            }
-
-        }
-        
 
         private void button1_Click(object sender, EventArgs e)
         {
             string[] sNums = richTextBox1.Text.Split(',');
-            textBox1.Text = Convert.ToString(sNums.Length);
 
             WallGet();
         }
@@ -206,29 +170,15 @@ namespace VKTest
             WallPost();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void button6_Click(object sender, EventArgs e)
         {
-            int delet = dataGridView1.SelectedCells[0].RowIndex;
-            dataGridView1.Rows.RemoveAt(delet);
+            string path = null;
+            using (var dialog = new FolderBrowserDialog())
+                if (dialog.ShowDialog() == DialogResult.OK)
+                    path = dialog.SelectedPath;
+                    textBox3.Text = path + @"\";
+                    Environment.CurrentDirectory = textBox3.Text; 
         }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < Variable.DataGridView.Rows.Count - 1; i++)
-            {
-                dataGridView1.Rows[i].Cells[0].Value = 1;
-            }
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            ReNameImage();
-        }
-    }
-
-    class Variable
-    {
-        public static DataGridView DataGridView { get; set; }
     }
 }
 
