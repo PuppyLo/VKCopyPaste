@@ -28,7 +28,6 @@ namespace ConsoleApp1
         public static string CommandsPath;
         public static string ImagePath;
 
-        static bool IsChat = false;
         const string BotCommandSuf = "";
 
         public MonteceVk()
@@ -46,7 +45,7 @@ namespace ConsoleApp1
             vkapi = new VkApi();
             _Random = new Random();
             CommandsPath = Environment.CurrentDirectory + @"/Commands";
-            ImagePath = Environment.CurrentDirectory + @"/Image";
+            ImagePath = @"C:\Users\Lo_N\YandexDisk\вк";
         }
 
         public static bool Authorization(string groupid)
@@ -56,29 +55,6 @@ namespace ConsoleApp1
             {
                 Console.WriteLine("Попытка авторизации...");
                 vkapi.Authorize(new ApiAuthParams { AccessToken = groupid });
-                Start();
-                return true;
-            }
-            catch (Exception e)
-            {
-                ColorMessage("Не удалось произвести авторизацию!" + Environment.NewLine + e.Message, ConsoleColor.Red);
-                return false;
-            }
-        }
-
-        public static bool Authorization(string login, string password, ulong appid, Settings settings)
-        {
-            MonteceVk VK = new MonteceVk();
-            try
-            {
-                Console.WriteLine("Попытка авторизации...");
-                vkapi.Authorize(new ApiAuthParams
-                {
-                    ApplicationId = appid,
-                    Login = login,
-                    Password = password,
-                    Settings = settings
-                });
                 Start();
                 return true;
             }
@@ -273,7 +249,7 @@ namespace ConsoleApp1
 
         #region Commands
 
-        static string[] Commands = { "помощь", "хентай", "случайное число <Мин> <Макс>", "новости", "учи~<Сообщение>~<Ответ>" };
+        static string[] Commands = { "команды", "хентай", /*"учи~<Сообщение>~<Ответ> ,"*/ "ай", "альбедо", "асуна", "боруто", "чика","эрина","геншин","хестия", "изуми", "кабанери","кана", "коносуба","кирису", "мегумин", "нир", "микаса", "рафталия","сенко","шинон","татсумаки","умару","02" };
 
         static void Command(string Message)
         {
@@ -285,27 +261,111 @@ namespace ConsoleApp1
                 //Простые и составные комманды
                 switch (Message)
                 {
-                    case "помощь":
+                    case "команды":
                         string msg = "";
                         for (int j = 0; j < Commands.Length; j++) msg += Commands[j] + ", ";
                         SendMessage(msg);
                         break;
                     case "хентай":
-                        Hentai();
+                        string HentaiPath = ImagePath + @"\Hentai";
+                        Hentai(HentaiPath);
                         break;
-                    case "новости":
-                        SendMessage(News("https://lenta.ru/rss/top7"));
+                    case "ай":
+                        string Ai = ImagePath + @"\Ai Hayasaka";
+                        Hentai(Ai);
                         break;
+                    case "альбедо":
+                        string Albedo = ImagePath +@"Albedo";
+                        Hentai(Albedo);
+                        break;
+                    case "асуна":
+                        string Asuna = ImagePath + @"\Asuna";
+                        Hentai(Asuna);
+                        break;
+                    case "боруто":
+                        string Boruto = ImagePath + @"\Boruto";
+                        Hentai(Boruto);
+                        break;
+                    case "чика":
+                        string Chika= ImagePath + @"\Chika Fujiwara";
+                        Hentai(Chika);
+                        break;
+                    case "эрина":
+                        string Erina = ImagePath + @"\Erina Nakiri";
+                        Hentai(Erina);
+                        break;
+                    case "геншин":
+                        string Genshin = ImagePath + @"\Genshin";
+                        Hentai(Genshin);
+                        break;
+                    case "хестия":
+                        string Hestia = ImagePath + @"\Hestia";
+                        Hentai(Hestia);
+                        break;
+                    case "изуми":
+                        string Izumi = ImagePath + @"\Izumi";
+                        Hentai(Izumi);
+                        break;
+                    case "кабанери":
+                        string Kabaneri = ImagePath + @"\Kabaneri";
+                        Hentai(Kabaneri);
+                        break;
+                    case "кана":
+                        string Kana = ImagePath + @"\Kana";
+                        Hentai(Kana);
+                        break;
+                    case "коносуба":
+                        string Konosuba = ImagePath + @"\Konosuba";
+                        Hentai(Konosuba);
+                        break;
+                    case "кирису":
+                        string Kirisu = ImagePath + @"\Kurisu Makise";
+                        Hentai(Kirisu);
+                        break;
+                    case "лоли":
+                        string Loli= ImagePath + @"\Loli";
+                        Hentai(Loli);
+                        break;
+                    case "мегумин":
+                        string Megumin = ImagePath + @"\Megumin";
+                        Hentai(Megumin);
+                        break;
+                    case "нир":
+                        string Nier = ImagePath + @"\Nier";
+                        Hentai(Nier);
+                        break;
+                    case "микаса":
+                        string Mikasa = ImagePath + @"\Mikasa Ackerman";
+                        Hentai(Mikasa);
+                        break;
+                    case "рафталия":
+                        string Folder = ImagePath + @"\Hentai";
+                        Hentai(Folder);
+                        break;
+                    case "сенко":
+                        string Senko = ImagePath + @"\Senko";
+                        Hentai(Senko);
+                        break;
+                    case "шинон":
+                        string Sinon = ImagePath + @"\Sinon";
+                        Hentai(Sinon);
+                        break;
+                    case "татсумаки":
+                        string Tatsumaki = ImagePath + @"\Tatsumaki";
+                        Hentai(Tatsumaki);
+                        break;
+                    case "умару":
+                        string Umaru = ImagePath + @"\Umaru";
+                        Hentai(Umaru);
+                        break;
+                    case "02":
+                        string Zero02 = ImagePath + @"\Zero02";
+                        Hentai(Zero02);
+                        break;
+
                     default:
-                        //---СОСТАВНЫЕ КОММАНДЫ---
-                        if (Message.Contains("случайное число "))
-                        {
-                            string Numbers = Message.Substring(Message.IndexOf("число") + 6);
-                            int Min = int.Parse(Numbers.Substring(0, Numbers.IndexOf(' ')));
-                            int Max = int.Parse(Numbers.Substring(Numbers.IndexOf(' '), Numbers.Length - Numbers.IndexOf(' ')));
-                            SendMessage(Rand(Min, Max));
-                        }
-                        else if (Message.Contains("учи~"))
+                        //---СОСТАВНЫЕ КОММАНДЫ---//
+                        if (Message.Contains("учи~"))
                         {
                             SendMessage(Learn(Message.Substring(4, Message.Length - 4)));
                         }
@@ -328,17 +388,17 @@ namespace ConsoleApp1
             return "";
         }
 
-        public static void Hentai()
+        public static void Hentai(string s)
         {
             var random = new Random();
-            var randomImage = random.Next(1, new DirectoryInfo(ImagePath).GetFiles().Length);
+            var randomImage = random.Next(1, new DirectoryInfo(s).GetFiles().Length);
 
             var wc = new WebClient();
             // Получить адрес сервера для загрузки картинок в сообщении
             var uploadServer = vkapi.Photo.GetMessagesUploadServer(userID);
 
             // Загрузить картинку на сервер VK.
-            var response = Encoding.ASCII.GetString(wc.UploadFile(uploadServer.UploadUrl, ImagePath + "/ " + randomImage + @".png"));
+            var response = Encoding.ASCII.GetString(wc.UploadFile(uploadServer.UploadUrl, s + "/" + randomImage + @".jpg"));
 
             // Сохранить загруженный файл
             var attachment = vkapi.Photo.SaveMessagesPhoto(response);
@@ -350,35 +410,6 @@ namespace ConsoleApp1
                 Attachments = attachment, //Вложение
                 RandomId = new Random().Next(999999) //Уникальный идентификатор
             });
-        }
-
-        public static string News(string url)
-        {
-
-            string Result = Web.DownloadString(url);
-            XDocument Doc = XDocument.Parse(Result);
-            List<RssNews> a = (from descendant in Doc.Descendants("item")
-                               select new RssNews()
-                               {
-                                   Description = descendant.Element("description").Value,
-                                   Title = descendant.Element("title").Value,
-                                   PublicationDate = descendant.Element("pubDate").Value
-                               }).ToList();
-            string News = "";
-            if (a != null)
-            {
-                int i = _Random.Next(0, a.Count - 1);
-                News = a[i].Title + Environment.NewLine + "------------------" + Environment.NewLine + a[i].Description;
-                byte[] bytes = Encoding.Default.GetBytes(News);
-                News = Encoding.UTF8.GetString(bytes);
-                return News;
-            }
-            else return "";
-        }
-
-        static string Rand(int Min, int Max)
-        {
-            return _Random.Next(Min, Max).ToString();
         }
 
         static string Learn(string message)
@@ -395,12 +426,5 @@ namespace ConsoleApp1
         }
 
         #endregion
-    }
-
-    public class RssNews
-    {
-        public string Title;
-        public string PublicationDate;
-        public string Description;
     }
 }

@@ -50,6 +50,7 @@ namespace VKTest
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.txt_UserPhotoAlbumID = new System.Windows.Forms.RichTextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -57,9 +58,8 @@ namespace VKTest
             this.txt_UserPhotoCount = new System.Windows.Forms.TextBox();
             this.txt_UserPhotoOwnerID = new System.Windows.Forms.TextBox();
             this.btn_UserPhotoGet = new System.Windows.Forms.Button();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.lb_UserGroupCount = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.txt_UserGroupOffset = new System.Windows.Forms.TextBox();
@@ -67,12 +67,14 @@ namespace VKTest
             this.txt_UserGroupListOwnerID = new System.Windows.Forms.RichTextBox();
             this.txt_UserGroupUserID = new System.Windows.Forms.TextBox();
             this.btn_UserGroup = new System.Windows.Forms.Button();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.tabPage5.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_GroupWallGet
@@ -251,9 +253,9 @@ namespace VKTest
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Location = new System.Drawing.Point(12, 41);
             this.tabControl1.MinimumSize = new System.Drawing.Size(410, 357);
             this.tabControl1.Multiline = true;
@@ -277,11 +279,12 @@ namespace VKTest
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(402, 332);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Группы";
+            this.tabPage1.Text = "Посты";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.txt_UserPhotoAlbumID);
             this.tabPage4.Controls.Add(this.label9);
             this.tabPage4.Controls.Add(this.label8);
             this.tabPage4.Controls.Add(this.label7);
@@ -296,6 +299,16 @@ namespace VKTest
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Пользователь";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // txt_UserPhotoAlbumID
+            // 
+            this.txt_UserPhotoAlbumID.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.txt_UserPhotoAlbumID.Location = new System.Drawing.Point(6, 113);
+            this.txt_UserPhotoAlbumID.Name = "txt_UserPhotoAlbumID";
+            this.txt_UserPhotoAlbumID.Size = new System.Drawing.Size(174, 213);
+            this.txt_UserPhotoAlbumID.TabIndex = 7;
+            this.txt_UserPhotoAlbumID.Text = "";
             // 
             // label9
             // 
@@ -338,7 +351,7 @@ namespace VKTest
             this.txt_UserPhotoCount.Name = "txt_UserPhotoCount";
             this.txt_UserPhotoCount.Size = new System.Drawing.Size(100, 20);
             this.txt_UserPhotoCount.TabIndex = 2;
-            this.txt_UserPhotoCount.Text = "200";
+            this.txt_UserPhotoCount.Text = "1000";
             // 
             // txt_UserPhotoOwnerID
             // 
@@ -357,37 +370,9 @@ namespace VKTest
             this.btn_UserPhotoGet.UseVisualStyleBackColor = true;
             this.btn_UserPhotoGet.Click += new System.EventHandler(this.btn_UserPhotoGet_Click);
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.label2);
-            this.tabPage2.Controls.Add(this.btn_WallPost);
-            this.tabPage2.Controls.Add(this.txt_WallPostOwnerID);
-            this.tabPage2.Controls.Add(this.label4);
-            this.tabPage2.Controls.Add(this.txt_WallPostDay);
-            this.tabPage2.Controls.Add(this.label6);
-            this.tabPage2.Controls.Add(this.txt_WallPostHours);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(402, 332);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Загрузить";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.btn_BotStart);
-            this.tabPage3.Controls.Add(this.txt_BotLog);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(402, 332);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Бот";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.lb_UserGroupCount);
             this.tabPage5.Controls.Add(this.label11);
             this.tabPage5.Controls.Add(this.label10);
             this.tabPage5.Controls.Add(this.txt_UserGroupOffset);
@@ -400,8 +385,18 @@ namespace VKTest
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage5.Size = new System.Drawing.Size(402, 332);
             this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "tabPage5";
+            this.tabPage5.Text = "Группы";
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // lb_UserGroupCount
+            // 
+            this.lb_UserGroupCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lb_UserGroupCount.AutoSize = true;
+            this.lb_UserGroupCount.Location = new System.Drawing.Point(284, 82);
+            this.lb_UserGroupCount.Name = "lb_UserGroupCount";
+            this.lb_UserGroupCount.Size = new System.Drawing.Size(112, 13);
+            this.lb_UserGroupCount.TabIndex = 7;
+            this.lb_UserGroupCount.Text = "Group Count:  999999";
             // 
             // label11
             // 
@@ -453,6 +448,7 @@ namespace VKTest
             this.txt_UserGroupUserID.Name = "txt_UserGroupUserID";
             this.txt_UserGroupUserID.Size = new System.Drawing.Size(100, 20);
             this.txt_UserGroupUserID.TabIndex = 1;
+            this.txt_UserGroupUserID.Text = "50870341";
             // 
             // btn_UserGroup
             // 
@@ -463,6 +459,35 @@ namespace VKTest
             this.btn_UserGroup.Text = "Start";
             this.btn_UserGroup.UseVisualStyleBackColor = true;
             this.btn_UserGroup.Click += new System.EventHandler(this.btn_UserGroup_Click);
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.label2);
+            this.tabPage2.Controls.Add(this.btn_WallPost);
+            this.tabPage2.Controls.Add(this.txt_WallPostOwnerID);
+            this.tabPage2.Controls.Add(this.label4);
+            this.tabPage2.Controls.Add(this.txt_WallPostDay);
+            this.tabPage2.Controls.Add(this.label6);
+            this.tabPage2.Controls.Add(this.txt_WallPostHours);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(402, 332);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Загрузить";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.btn_BotStart);
+            this.tabPage3.Controls.Add(this.txt_BotLog);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(402, 332);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Бот";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -481,11 +506,11 @@ namespace VKTest
             this.tabPage1.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
-            this.tabPage5.ResumeLayout(false);
-            this.tabPage5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -530,6 +555,8 @@ namespace VKTest
         private System.Windows.Forms.TextBox txt_UserGroupOffset;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label lb_UserGroupCount;
+        private System.Windows.Forms.RichTextBox txt_UserPhotoAlbumID;
     }
 }
 

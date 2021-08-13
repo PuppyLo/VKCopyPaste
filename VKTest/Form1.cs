@@ -49,6 +49,8 @@ namespace VKTest
             Properties.Settings.Default.Save();
         }
 
+        #region Auth
+
         public void Authorization()
         {
             vkapi.Authorize(new ApiAuthParams()
@@ -60,6 +62,22 @@ namespace VKTest
                 Settings = Settings.All
             });
         }
+
+        #endregion
+
+        #region Select Folder
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            string path = null;
+            using (var dialog = new FolderBrowserDialog())
+                if (dialog.ShowDialog() == DialogResult.OK)
+                    path = dialog.SelectedPath;
+            txt_SelectFolder.Text = path + @"\";
+            Environment.CurrentDirectory = txt_SelectFolder.Text;
+        }
+
+        #endregion
 
         #region Wall Get&Post
 
@@ -94,7 +112,7 @@ namespace VKTest
                                 WebClient wc = new WebClient();
                                 img = new Bitmap(wc.OpenRead(phLink));
 
-                                img.Save(txt_SelectFolder.Text + item.Attachments[i].Instance.Id + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                                img.Save(txt_SelectFolder.Text + item.OwnerId + "_" + + item.Attachments[i].Instance.Id + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
                             }
                         }
                     }
@@ -116,7 +134,7 @@ namespace VKTest
             float addtime;
             DateTime date;
 
-            for (int i = 1, j = CountImage - 2; i <= CountImage; i++, j--)
+            for (int i = 1, j = CountImage-2; i <= CountImage; i++, j--)
             {
                 try
                 {
@@ -164,14 +182,57 @@ namespace VKTest
             WallPost();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        #endregion
+
+        #region User Get Photo
+
+        private void btn_UserPhotoGet_Click(object sender, EventArgs e)
         {
-            string path = null;
-            using (var dialog = new FolderBrowserDialog())
-                if (dialog.ShowDialog() == DialogResult.OK)
-                    path = dialog.SelectedPath;
-            txt_SelectFolder.Text = path + @"\";
-            Environment.CurrentDirectory = txt_SelectFolder.Text;
+            var photoGet = vkapi.Photo.Get(new PhotoGetParams { OwnerId = Convert.ToInt32(txt_UserPhotoOwnerID.Text), Count = (ulong)Convert.ToInt64(txt_UserPhotoCount.Text), Offset = (ulong)Convert.ToInt32(txt_UserPhotoOffset.Text),AlbumId = VkNet.Enums.SafetyEnums.PhotoAlbumType.Id(Convert.ToInt32(txt_UserPhotoAlbumID.Text)) });
+            {
+                foreach (var photo in photoGet)
+                {
+                    for (int i = 6; i < 11; i++)
+                    {
+                        try
+                        {
+                            string phLink = photo?.Sizes[i].Url.ToString();
+
+                            WebClient wc = new WebClient();
+                            System.Drawing.Image img = new Bitmap(wc.OpenRead(phLink));
+
+                            img.Save(txt_SelectFolder.Text + photo.OwnerId + "_" + photo.Id + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                            
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            continue;
+                        }
+                        //Thread.Sleep(500);
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region User Group
+
+        private void btn_UserGroup_Click(object sender, EventArgs e)
+        {
+
+            txt_UserGroupListOwnerID.Clear();
+
+            var groupGet = vkapi.Groups.Get(new GroupsGetParams { UserId = Convert.ToInt32(txt_UserGroupUserID.Text), Count = Convert.ToInt32(txt_UserGroupCount.Text), Offset = Convert.ToInt32(txt_UserGroupOffset.Text) });
+
+            foreach (var group in groupGet)
+            {
+
+                lb_UserGroupCount.Text = "Group Count: " + groupGet.Count.ToString();
+
+                    txt_UserGroupListOwnerID.Text += group.Id + "," + "\n";
+            }
         }
         #endregion
 
@@ -526,50 +587,6 @@ namespace VKTest
         //
         #endregion
 
-        #region User Get Photo
-
-        private void btn_UserPhotoGet_Click(object sender, EventArgs e)
-        {
-
-            var photoGet = vkapi.Photo.GetAll(new PhotoGetAllParams { OwnerId = Convert.ToInt32(txt_UserPhotoOwnerID.Text), Count = (ulong)Convert.ToInt64(txt_UserPhotoCount.Text), Offset = (ulong)Convert.ToInt32(txt_UserPhotoOffset.Text) });
-
-            {
-                foreach (var photo in photoGet)
-                {
-                    for (int i = 8; i < 11; i++)
-                    {
-
-                        try
-                        {
-                            string phLink = photo?.Sizes[i].Url.ToString();
-
-                            WebClient wc = new WebClient();
-                            System.Drawing.Image img = new Bitmap(wc.OpenRead(phLink));
-
-                            img.Save(txt_SelectFolder.Text + photo.OwnerId + "_" + photo.Id + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
-                        }
-                        catch
-                        {
-                            continue;
-                        }
-                    }
-                }
-            }
-        }
-        #endregion
-
-        #region User Group
-
-        private void btn_UserGroup_Click(object sender, EventArgs e)
-        {
-            var groupGet = vkapi.Groups.Get(new GroupsGetParams { UserId = Convert.ToInt32(txt_UserGroupUserID.Text), Count = Convert.ToInt32(txt_UserGroupCount.Text), Offset = Convert.ToInt32(txt_UserGroupOffset.Text) });
-
-            foreach (var group in groupGet)
-            {
-                txt_UserGroupListOwnerID.Text += group.Id + "," + "\n";
-            }
-        }
-        #endregion
     }
 
 }
