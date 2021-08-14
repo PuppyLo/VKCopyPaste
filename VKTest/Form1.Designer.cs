@@ -213,6 +213,7 @@ namespace VKTest
             this.txt_SelectFolder.Name = "txt_SelectFolder";
             this.txt_SelectFolder.Size = new System.Drawing.Size(300, 20);
             this.txt_SelectFolder.TabIndex = 33;
+            this.txt_SelectFolder.Text = "C:\\";
             // 
             // btn_SelectFolder
             // 

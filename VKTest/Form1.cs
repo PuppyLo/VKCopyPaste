@@ -32,7 +32,13 @@ namespace VKTest
 
             Authorization();
 
+            if(Properties.Settings.Default.PathDirectory_Value == null)
+            {
+                Properties.Settings.Default.PathDirectory_Value = @"C:\";
+            }
+
             Environment.CurrentDirectory = Properties.Settings.Default.PathDirectory_Value;
+           
 
         }
 
