@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using VkNet.Enums;
 using VkNet.Exception;
+using VkNet.Enums.SafetyEnums;
 
 namespace VKTest
 {
@@ -474,9 +475,6 @@ namespace VKTest
                     case "хентай":
                         Hentai();
                         break;
-                    case "новости":
-                        SendMessage(News("https://lenta.ru/rss/top7"));
-                        break;
                     default:
                         //---СОСТАВНЫЕ КОММАНДЫ---
                         if (Message.Contains("случайное число "))
@@ -533,30 +531,6 @@ namespace VKTest
             });
         }
 
-        public string News(string url)
-        {
-
-            string Result = Web.DownloadString(url);
-            XDocument Doc = XDocument.Parse(Result);
-            List<RssNews> a = (from descendant in Doc.Descendants("item")
-                               select new RssNews()
-                               {
-                                   Description = descendant.Element("description").Value,
-                                   Title = descendant.Element("title").Value,
-                                   PublicationDate = descendant.Element("pubDate").Value
-                               }).ToList();
-            string News = "";
-            if (a != null)
-            {
-                int i = _Random.Next(0, a.Count - 1);
-                News = a[i].Title + Environment.NewLine + "------------------" + Environment.NewLine + a[i].Description;
-                byte[] bytes = Encoding.Default.GetBytes(News);
-                News = Encoding.UTF8.GetString(bytes);
-                return News;
-            }
-            else return "";
-        }
-
         public string Rand(int Min, int Max)
         {
             return _Random.Next(Min, Max).ToString();
@@ -593,15 +567,50 @@ namespace VKTest
         //
         #endregion
 
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            vkapi.Authorize(new ApiAuthParams()
+            {
+                AccessToken = "9e0c4d26cb94dea1ae6769b19869a2afe7836067a589b2af728207d30845f5ec9974b29586c71fecfef0e",
+                //Login = "+79777243865",
+                //Password = "AMG_FOREVER^^&@!$!",
+                ApplicationId = 7847742,
+                Settings = Settings.All
+            });
+
+            var photoGet = vkapi.Photo.Get(new PhotoGetParams { Count = 1000, OwnerId = -192785852, AlbumId = PhotoAlbumType.Id(270921652) }); ; ; ;
+
+            var randomCount = new Random().Next(0, photoGet.Count);
+
+            for (int i = 11; i > 5; i--)
+            {
+                try
+                {
+                    WebClient wc = new WebClient();
+                    System.Drawing.Image img = new Bitmap(wc.OpenRead(photoGet[randomCount].Sizes[i].Url));
+
+                    img.Save(txt_SelectFolder.Text + photoGet[randomCount].Id + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                    var uploadServer = vkapi.Photo.GetMessagesUploadServer(455719572);
+
+                    var response = Encoding.ASCII.GetString(wc.UploadFile(uploadServer.UploadUrl, (txt_SelectFolder.Text + photoGet[randomCount].Id + ".jpg")));
+                    var attachment = vkapi.Photo.SaveMessagesPhoto(response);
+
+                    vkapi.Messages.Send(new MessagesSendParams
+                    {
+                        UserId = 455719572,
+                        Attachments = attachment,
+                        RandomId = new Random().Next(999999)
+                    });
+                    File.Delete(txt_SelectFolder.Text + photoGet[randomCount].Id + ".jpg");
+
+                    break;
+                }
+                catch { continue; }
+            }
+        }
     }
 
 }
 
-
-public class RssNews
-{
-    public string Title;
-    public string PublicationDate;
-    public string Description;
-}
 
