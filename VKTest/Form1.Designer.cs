@@ -45,8 +45,6 @@ namespace VKTest
             this.label6 = new System.Windows.Forms.Label();
             this.txt_SelectFolder = new System.Windows.Forms.TextBox();
             this.btn_SelectFolder = new System.Windows.Forms.Button();
-            this.txt_BotLog = new System.Windows.Forms.RichTextBox();
-            this.btn_BotStart = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
@@ -69,9 +67,13 @@ namespace VKTest
             this.btn_UserGroup = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.txt_PhotoSaveAlbumID = new System.Windows.Forms.TextBox();
+            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
+            this.btn_PhotoSave = new System.Windows.Forms.Button();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_AlbumGet = new System.Windows.Forms.Button();
+            this.txt_PhotoSave_i = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -229,28 +231,6 @@ namespace VKTest
             this.btn_SelectFolder.UseVisualStyleBackColor = true;
             this.btn_SelectFolder.Click += new System.EventHandler(this.button6_Click);
             // 
-            // txt_BotLog
-            // 
-            this.txt_BotLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txt_BotLog.Location = new System.Drawing.Point(6, 40);
-            this.txt_BotLog.MinimumSize = new System.Drawing.Size(390, 285);
-            this.txt_BotLog.Name = "txt_BotLog";
-            this.txt_BotLog.Size = new System.Drawing.Size(390, 286);
-            this.txt_BotLog.TabIndex = 35;
-            this.txt_BotLog.Text = "";
-            // 
-            // btn_BotStart
-            // 
-            this.btn_BotStart.Location = new System.Drawing.Point(6, 6);
-            this.btn_BotStart.Name = "btn_BotStart";
-            this.btn_BotStart.Size = new System.Drawing.Size(59, 28);
-            this.btn_BotStart.TabIndex = 36;
-            this.btn_BotStart.Text = "Start";
-            this.btn_BotStart.UseVisualStyleBackColor = true;
-            this.btn_BotStart.Click += new System.EventHandler(this.button3_Click);
-            // 
             // tabControl1
             // 
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -391,7 +371,7 @@ namespace VKTest
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage5.Size = new System.Drawing.Size(402, 332);
             this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "Group Count";
+            this.tabPage5.Text = "Group ID";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
             // lb_UserGroupCount
@@ -485,26 +465,55 @@ namespace VKTest
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.btn_BotStart);
-            this.tabPage3.Controls.Add(this.txt_BotLog);
+            this.tabPage3.Controls.Add(this.txt_PhotoSave_i);
+            this.tabPage3.Controls.Add(this.txt_PhotoSaveAlbumID);
+            this.tabPage3.Controls.Add(this.richTextBox2);
+            this.tabPage3.Controls.Add(this.btn_PhotoSave);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(402, 332);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Bot";
+            this.tabPage3.TabIndex = 6;
+            this.tabPage3.Text = "Photo Save";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // txt_PhotoSaveAlbumID
+            // 
+            this.txt_PhotoSaveAlbumID.Location = new System.Drawing.Point(84, 18);
+            this.txt_PhotoSaveAlbumID.Name = "txt_PhotoSaveAlbumID";
+            this.txt_PhotoSaveAlbumID.Size = new System.Drawing.Size(100, 20);
+            this.txt_PhotoSaveAlbumID.TabIndex = 2;
+            // 
+            // richTextBox2
+            // 
+            this.richTextBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox2.Location = new System.Drawing.Point(3, 44);
+            this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.Size = new System.Drawing.Size(396, 285);
+            this.richTextBox2.TabIndex = 1;
+            this.richTextBox2.Text = "";
+            // 
+            // btn_PhotoSave
+            // 
+            this.btn_PhotoSave.Location = new System.Drawing.Point(3, 15);
+            this.btn_PhotoSave.Name = "btn_PhotoSave";
+            this.btn_PhotoSave.Size = new System.Drawing.Size(75, 23);
+            this.btn_PhotoSave.TabIndex = 0;
+            this.btn_PhotoSave.Text = "Photo Save";
+            this.btn_PhotoSave.UseVisualStyleBackColor = true;
+            this.btn_PhotoSave.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // tabPage6
             // 
             this.tabPage6.Controls.Add(this.richTextBox1);
-            this.tabPage6.Controls.Add(this.button1);
+            this.tabPage6.Controls.Add(this.btn_AlbumGet);
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage6.Size = new System.Drawing.Size(402, 332);
             this.tabPage6.TabIndex = 5;
-            this.tabPage6.Text = "ForTest";
+            this.tabPage6.Text = "Album Get";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
             // richTextBox1
@@ -515,15 +524,25 @@ namespace VKTest
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
             // 
-            // button1
+            // btn_AlbumGet
             // 
-            this.button1.Location = new System.Drawing.Point(3, 6);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            this.btn_AlbumGet.Location = new System.Drawing.Point(3, 6);
+            this.btn_AlbumGet.Name = "btn_AlbumGet";
+            this.btn_AlbumGet.Size = new System.Drawing.Size(75, 23);
+            this.btn_AlbumGet.TabIndex = 0;
+            this.btn_AlbumGet.Text = "Album Get";
+            this.btn_AlbumGet.UseVisualStyleBackColor = true;
+            this.btn_AlbumGet.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // txt_PhotoSave_i
+            // 
+            this.txt_PhotoSave_i.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txt_PhotoSave_i.Location = new System.Drawing.Point(367, 18);
+            this.txt_PhotoSave_i.Name = "txt_PhotoSave_i";
+            this.txt_PhotoSave_i.Size = new System.Drawing.Size(32, 20);
+            this.txt_PhotoSave_i.TabIndex = 3;
+            this.txt_PhotoSave_i.Text = "1";
+            this.txt_PhotoSave_i.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Form1
             // 
@@ -547,6 +566,7 @@ namespace VKTest
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.tabPage6.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -570,12 +590,9 @@ namespace VKTest
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txt_SelectFolder;
         private System.Windows.Forms.Button btn_SelectFolder;
-        private System.Windows.Forms.RichTextBox txt_BotLog;
-        private System.Windows.Forms.Button btn_BotStart;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TextBox txt_UserPhotoOwnerID;
         private System.Windows.Forms.Button btn_UserPhotoGet;
@@ -596,7 +613,12 @@ namespace VKTest
         private System.Windows.Forms.RichTextBox txt_UserPhotoAlbumID;
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.RichTextBox richTextBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_AlbumGet;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.RichTextBox richTextBox2;
+        private System.Windows.Forms.Button btn_PhotoSave;
+        private System.Windows.Forms.TextBox txt_PhotoSaveAlbumID;
+        private System.Windows.Forms.TextBox txt_PhotoSave_i;
     }
 }
 

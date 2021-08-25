@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -12,6 +13,7 @@ using System.Xml.Linq;
 using VkNet;
 using VkNet.Enums;
 using VkNet.Enums.Filters;
+using VkNet.Enums.SafetyEnums;
 using VkNet.Exception;
 using VkNet.Model;
 using VkNet.Model.RequestParams;
@@ -46,6 +48,7 @@ namespace ConsoleApp1
             _Random = new Random();
             CommandsPath = Environment.CurrentDirectory + @"/Commands";
             ImagePath = @"C:\Users\Lo_N\YandexDisk\вк";
+            
         }
 
         public static bool Authorization(string groupid)
@@ -64,6 +67,8 @@ namespace ConsoleApp1
                 return false;
             }
         }
+
+       
 
         private static void Start()
         {
@@ -263,106 +268,106 @@ namespace ConsoleApp1
                 {
                     case "команды":
                         string msg = "";
-                        for (int j = 0; j < Commands.Length; j++) msg += Commands[j] + ", ";
+                        for (int j = 0; j < Commands.Length; j++) msg += Commands[j] + ", "
+                                +"\n";
                         SendMessage(msg);
                         break;
                     case "хентай":
-                        string HentaiPath = ImagePath + @"\Hentai";
+                        int HentaiPath = 270921652;
                         Hentai(HentaiPath);
                         break;
                     case "ай":
-                        string Ai = ImagePath + @"\Ai Hayasaka";
+                        int Ai = 280644067;
                         Hentai(Ai);
                         break;
                     case "альбедо":
-                        string Albedo = ImagePath +@"Albedo";
+                        int Albedo = 280644069;
                         Hentai(Albedo);
                         break;
                     case "асуна":
-                        string Asuna = ImagePath + @"\Asuna";
+                        int Asuna = 280644071;
                         Hentai(Asuna);
                         break;
                     case "боруто":
-                        string Boruto = ImagePath + @"\Boruto";
+                        int Boruto = 280644074;
                         Hentai(Boruto);
                         break;
                     case "чика":
-                        string Chika= ImagePath + @"\Chika Fujiwara";
+                        int Chika = 280644076;
                         Hentai(Chika);
                         break;
                     case "эрина":
-                        string Erina = ImagePath + @"\Erina Nakiri";
+                        int Erina = 280644077;
                         Hentai(Erina);
                         break;
                     case "геншин":
-                        string Genshin = ImagePath + @"\Genshin";
+                        int Genshin = 280644078;
                         Hentai(Genshin);
                         break;
                     case "хестия":
-                        string Hestia = ImagePath + @"\Hestia";
+                        int Hestia = 280644080;
                         Hentai(Hestia);
                         break;
                     case "изуми":
-                        string Izumi = ImagePath + @"\Izumi";
+                        int Izumi = 280644082;
                         Hentai(Izumi);
                         break;
                     case "кабанери":
-                        string Kabaneri = ImagePath + @"\Kabaneri";
+                        int Kabaneri = 280644083;
                         Hentai(Kabaneri);
                         break;
                     case "кана":
-                        string Kana = ImagePath + @"\Kana";
+                        int Kana = 280644087;
                         Hentai(Kana);
                         break;
                     case "коносуба":
-                        string Konosuba = ImagePath + @"\Konosuba";
+                        int Konosuba = 280644088;
                         Hentai(Konosuba);
                         break;
                     case "кирису":
-                        string Kirisu = ImagePath + @"\Kurisu Makise";
+                        int Kirisu = 280644089;
                         Hentai(Kirisu);
                         break;
                     case "лоли":
-                        string Loli= ImagePath + @"\Loli";
+                        int Loli = 280644092;
                         Hentai(Loli);
                         break;
                     case "мегумин":
-                        string Megumin = ImagePath + @"\Megumin";
+                        int Megumin = 280644093;
                         Hentai(Megumin);
                         break;
                     case "нир":
-                        string Nier = ImagePath + @"\Nier";
+                        int Nier = 280644097;
                         Hentai(Nier);
                         break;
                     case "микаса":
-                        string Mikasa = ImagePath + @"\Mikasa Ackerman";
+                        int Mikasa = 280644096;
                         Hentai(Mikasa);
                         break;
                     case "рафталия":
-                        string Folder = ImagePath + @"\Hentai";
+                        int Folder = 280644098;
                         Hentai(Folder);
                         break;
                     case "сенко":
-                        string Senko = ImagePath + @"\Senko";
+                        int Senko = 280644099;
                         Hentai(Senko);
                         break;
                     case "шинон":
-                        string Sinon = ImagePath + @"\Sinon";
+                        int Sinon = 280644103;
                         Hentai(Sinon);
                         break;
                     case "татсумаки":
-                        string Tatsumaki = ImagePath + @"\Tatsumaki";
+                        int Tatsumaki = 280644105;
                         Hentai(Tatsumaki);
                         break;
                     case "умару":
-                        string Umaru = ImagePath + @"\Umaru";
+                        int Umaru = 280644107;
                         Hentai(Umaru);
                         break;
                     case "02":
-                        string Zero02 = ImagePath + @"\Zero02";
+                        int Zero02 = 280644108;
                         Hentai(Zero02);
                         break;
-
                     default:
                         //---СОСТАВНЫЕ КОММАНДЫ---//
                         if (Message.Contains("учи~"))
@@ -388,29 +393,66 @@ namespace ConsoleApp1
             return "";
         }
 
-        public static void Hentai(string s)
+       /* public static void Hentai(int s)
         {
             var random = new Random();
             var randomImage = random.Next(1, new DirectoryInfo(s).GetFiles().Length);
 
             var wc = new WebClient();
-            // Получить адрес сервера для загрузки картинок в сообщении
             var uploadServer = vkapi.Photo.GetMessagesUploadServer(userID);
-
-            // Загрузить картинку на сервер VK.
             var response = Encoding.ASCII.GetString(wc.UploadFile(uploadServer.UploadUrl, s + "/" + randomImage + @".jpg"));
-
-            // Сохранить загруженный файл
             var attachment = vkapi.Photo.SaveMessagesPhoto(response);
 
             vkapi.Messages.Send(new MessagesSendParams
             {
                 UserId = userID, //Id получателя
-                //Message = "Message", //Сообщение
                 Attachments = attachment, //Вложение
                 RandomId = new Random().Next(999999) //Уникальный идентификатор
             });
+        }*/
+
+        public static void Hentai(int Albumid)
+        {
+            vkapi.Authorize(new ApiAuthParams
+            {
+                //AccessToken = "44ff296744ff296744ff2967bf44889659444ff44ff2967246b1e413baf476f19e8a415",
+                Login = "+79017930178",
+                Password = "AMG_FOREVER^^&@!$!",
+                ApplicationId = 7847742,
+                Settings = Settings.All
+            });
+            
+            var photoGet = vkapi.Photo.Get(new PhotoGetParams { Count = 1000, OwnerId = -192785852, AlbumId = PhotoAlbumType.Id(Albumid) });
+
+            var randomCount = new Random().Next(0, photoGet.Count);
+
+            for (int i = 11; i > 5; i--)
+            {
+                vkapi.Authorize(new ApiAuthParams { AccessToken = "3fccfa54ed7a5c8fa15ab967e127dd1027104adb8c2cce515faed7df6e5a2d329d7f5ea37e7fa90b60a6d" });
+
+                try
+                {
+                    var wc = new WebClient();
+                    System.Drawing.Image img = new Bitmap(wc.OpenRead(photoGet[randomCount].Sizes[i].Url));
+                    img.Save(Environment.CurrentDirectory + photoGet[randomCount].Id + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                    var uploadServer = vkapi.Photo.GetMessagesUploadServer(userID);
+                    var response = Encoding.ASCII.GetString(wc.UploadFile(uploadServer.UploadUrl, (Environment.CurrentDirectory + photoGet[randomCount].Id + ".jpg")));
+                    var attachment = vkapi.Photo.SaveMessagesPhoto(response);
+
+                    vkapi.Messages.Send(new MessagesSendParams
+                    {
+                        UserId = userID, //Id получателя
+                        Attachments = attachment, //Вложение
+                        RandomId = new Random().Next(999999) //Уникальный идентификатор
+                    });
+                    File.Delete(Environment.CurrentDirectory + photoGet[randomCount].Id + ".jpg");
+                    break;
+                }
+                catch { continue; }
+            }
         }
+    
 
         static string Learn(string message)
         {
