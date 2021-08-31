@@ -8,24 +8,17 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
 using VkNet;
 using VkNet.Enums.Filters;
 using VkNet.Model;
 using VkNet.Model.Attachments;
 using VkNet.Model.RequestParams;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using VkNet.Enums;
-using VkNet.Exception;
-using VkNet.Enums.SafetyEnums;
 
 namespace VKTest
 {
     public partial class Form1 : Form
     {
         VkApi vkapi = new VkApi();
-
 
         public Form1()
         {
@@ -170,8 +163,10 @@ namespace VKTest
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    continue;
+                    var message = MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                    if (message == DialogResult.OK)
+                    { continue; }
+                    else { break; }
                 }
             }
 
@@ -206,7 +201,6 @@ namespace VKTest
                             System.Drawing.Image img = new Bitmap(wc.OpenRead(phLink));
 
                             img.Save(txt_SelectFolder.Text + photo.OwnerId + "_" + photo.Id + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
-
                         }
                         catch (Exception ex)
                         {
@@ -225,16 +219,13 @@ namespace VKTest
 
         private void btn_UserGroup_Click(object sender, EventArgs e)
         {
-
             txt_UserGroupListOwnerID.Clear();
 
             var groupGet = vkapi.Groups.Get(new GroupsGetParams { UserId = Convert.ToInt32(txt_UserGroupUserID.Text), Count = Convert.ToInt32(txt_UserGroupCount.Text), Offset = Convert.ToInt32(txt_UserGroupOffset.Text) });
 
             foreach (var group in groupGet)
             {
-
                 lb_UserGroupCount.Text = "Group Count: " + groupGet.Count.ToString();
-
                 txt_UserGroupListOwnerID.Text += group.Id + "," + "\n";
             }
         }
@@ -244,7 +235,7 @@ namespace VKTest
         private void button1_Click_1(object sender, EventArgs e)
         {
             var AlbumId = vkapi.Photo.GetAlbums(new PhotoGetAlbumsParams { OwnerId = -192785852 });
-            foreach(var ID in AlbumId)
+            foreach (var ID in AlbumId)
             {
                 richTextBox1.Text += ID.Title + ": " + ID.Id + "\n";
             }
