@@ -53,8 +53,8 @@ namespace VKTest
         {
             vkapi.Authorize(new ApiAuthParams()
             {
-                //AccessToken = "2943f696837fb2befcf3132463b0774282a8b0bf2d43dabb2edccca8cf83605618d7d5e6262b3b105f992",
-                Login = "+79017930178",
+                AccessToken = "91a2138d54ebe0aeb91699b4663f5b23ade0b75a78dd69cb3612f046e245f226225ae69ce9df3f4dd49e8",
+                Login = "+79777243865",
                 Password = "AMG_FOREVER^^&@!$!",
                 ApplicationId = 7847742,
                 Settings = Settings.All
