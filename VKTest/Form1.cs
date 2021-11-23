@@ -54,10 +54,11 @@ namespace VKTest
             vkapi.Authorize(new ApiAuthParams()
             {
                 AccessToken = "91a2138d54ebe0aeb91699b4663f5b23ade0b75a78dd69cb3612f046e245f226225ae69ce9df3f4dd49e8",
-                Login = "+79777243865",
-                Password = "AMG_FOREVER^^&@!$!",
+                //Login = "+79777243865",
+                //Password = "AMG_FOREVER^^&@!$!",
                 ApplicationId = 7847742,
-                Settings = Settings.All
+                Settings = Settings.All,
+                
             });
         }
 
@@ -77,7 +78,7 @@ namespace VKTest
 
         #endregion
 
-        #region Wall Get&Post
+        #region Wall Get
 
         public async Task<string> WallGet()
         {
@@ -122,6 +123,9 @@ namespace VKTest
             return URLList.ToString();
         }
 
+        #endregion
+
+        #region Wall Post
         public void WallPost()
         {
             var GroupKyda = Convert.ToInt64(txt_WallPostOwnerID.Text);
@@ -132,7 +136,7 @@ namespace VKTest
             float addtime;
             DateTime date;
 
-            for (int i = 1, j = CountImage; i <= 50; i++, j--)
+            for (int i = 1, j = CountImage + 1; i <= 50; i++, j--)
             {
                 try
                 {
@@ -273,6 +277,18 @@ namespace VKTest
 
         #endregion
 
+        private void button1_Click_2(object sender, EventArgs e)
+        {
+            string[] second = Directory.GetFiles(Properties.Settings.Default.PathDirectory_Value);
+            
+            second = second.OrderBy(s => s.Length).ToArray();
+
+            for (int i = 0; i < 45; i++)
+            {
+                listBox1.Items.Add(second[i]);
+            }
+
+        }
     }
 
 }
