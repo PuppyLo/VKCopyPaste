@@ -53,9 +53,9 @@ namespace VKTest
         {
             vkapi.Authorize(new ApiAuthParams()
             {
-                AccessToken = "91a2138d54ebe0aeb91699b4663f5b23ade0b75a78dd69cb3612f046e245f226225ae69ce9df3f4dd49e8",
-                //Login = "+79777243865",
-                //Password = "AMG_FOREVER^^&@!$!",
+                AccessToken = "3fe5bc6fc77f675384fed73a629ecc7f8df1ff7e62f2fd00169b36f52fd7b52d86c6825e318d5d2ec1878",
+                Login = "+79777243865",
+                Password = "AMG_FOREVER^^&@!$!",
                 ApplicationId = 7847742,
                 Settings = Settings.All,
                 
@@ -136,8 +136,11 @@ namespace VKTest
             float addtime;
             DateTime date;
 
-            for (int i = 1, j = CountImage + 1; i <= 50; i++, j--)
+            string[] second = Directory.GetFiles(txt_SelectFolder.Text); // путь к папке
+
+            for (int i = 1, j = second.Length - 1; i <= 50; i ++,j--)//j = CountImage + 1; i <= 50; i++, j--)
             {
+
                 try
                 {
                     addtime = i;
@@ -147,7 +150,7 @@ namespace VKTest
 
                     var wc = new WebClient();
                     var upServer = vkapi.Photo.GetWallUploadServer(GroupKyda);
-                    var response = Encoding.ASCII.GetString(wc.UploadFile(upServer.UploadUrl, txt_SelectFolder.Text + j + @".jpg"));
+                    var response = Encoding.ASCII.GetString(wc.UploadFile(upServer.UploadUrl, second[j])); //txt_SelectFolder.Text + j + @".jpg"));
                     var photos = vkapi.Photo.SaveWallPhoto(response, null, (ulong)GroupKyda);
 
                     vkapi.Wall.Post(new WallPostParams
@@ -156,22 +159,26 @@ namespace VKTest
                         Attachments = photos,
                         FromGroup = true,
                         PublishDate = date,
-                        Copyright = "pixiv.net",
-                        Message = "#hentai_ka",
+                        Copyright = "xentaika.ru",
+                        Message = "#xentaika.ru",
                     });
 
-                    File.Delete(txt_SelectFolder.Text + j + @".jpg");
+                    File.Delete(second[j]);
+
+                    //File.Delete(txt_SelectFolder.Text + j + @".jpg");
 
                     //var time = TimeSpan.FromMinutes(30);
                     Thread.Sleep(500);
                 }
-                catch (Exception ex)
+                catch 
                 {
-                    var message = MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                    /*(Exception ex)  var message = MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                     if (message == DialogResult.OK)
                     { continue; }
-                    else { break; }
+                    else { break; }*/
+                    break;
                 }
+                
             }
 
         }
