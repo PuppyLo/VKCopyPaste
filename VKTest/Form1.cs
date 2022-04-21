@@ -54,9 +54,7 @@ namespace VKTest
         {
             vkapi.Authorize(new ApiAuthParams()
             {
-                AccessToken = "3fe5bc6fc77f675384fed73a629ecc7f8df1ff7e62f2fd00169b36f52fd7b52d86c6825e318d5d2ec1878",
-                Login = "+79777243865",
-                Password = "AMG_FOREVER^^&@!$!",
+                AccessToken = "efb526959fd9474509237898eb3a0888b2c120be2ba48a6f3c978a79d9997765f04f132cf3d61c1d650c3",
                 ApplicationId = 7847742,
                 Settings = Settings.All,
                 
@@ -139,19 +137,17 @@ namespace VKTest
 
             string[] second = Directory.GetFiles(txt_SelectFolder.Text); // путь к папке
 
-            for (int i = 1, j = second.Length - 1; i <= 50; i ++,j--)//j = CountImage + 1; i <= 50; i++, j--)
+            //for (int i = 0, j = second.Length; i <= 50; i ++,j--)//j = CountImage + 1; i <= 50; i++, j--)
+            for(int i = 0; i <= second.Length; i++)
             {
-
-                try
-                {
                     addtime = i;
-                    addtime += i * 30;
+                    addtime += i * 60;
                     date = new DateTime();
                     date = DateTime.Now.AddDays(Day).AddHours(Hour).AddMinutes(addtime);
 
                     var wc = new WebClient();
                     var upServer = vkapi.Photo.GetWallUploadServer(GroupKyda);
-                    var response = Encoding.ASCII.GetString(wc.UploadFile(upServer.UploadUrl, second[j])); //txt_SelectFolder.Text + j + @".jpg"));
+                    var response = Encoding.ASCII.GetString(wc.UploadFile(upServer.UploadUrl, second[i])); //txt_SelectFolder.Text + j + @".jpg"));
                     var photos = vkapi.Photo.SaveWallPhoto(response, null, (ulong)GroupKyda);
 
                     vkapi.Wall.Post(new WallPostParams
@@ -164,22 +160,22 @@ namespace VKTest
                         Message = "#xentaika.ru",
                     });
 
-                    File.Delete(second[j]);
+                    File.Delete(second[i]);
 
                     //File.Delete(txt_SelectFolder.Text + j + @".jpg");
 
                     //var time = TimeSpan.FromMinutes(30);
                     Thread.Sleep(500);
-                }
-                catch 
+
+                /*catch 
                 {
-                    /*(Exception ex)  var message = MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                    (Exception ex)  var message = MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
                     if (message == DialogResult.OK)
                     { continue; }
-                    else { break; }*/
-                    break;
-                }
-                
+                    else { break; }
+                break;
+                }*/
+
             }
 
         }
@@ -195,8 +191,6 @@ namespace VKTest
         {
             WallPost();
         }
-
-        #endregion
 
         #region User Get Photo
 
