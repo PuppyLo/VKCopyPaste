@@ -140,7 +140,7 @@ namespace VKTest
             //for (int i = 0, j = second.Length; i <= 50; i ++,j--)//j = CountImage + 1; i <= 50; i++, j--)
             for(int i = 0; i <= second.Length; i++)
             {
-                    addtime = i;
+                    addtime = i+1;
                     addtime += i * 60;
                     date = new DateTime();
                     date = DateTime.Now.AddDays(Day).AddHours(Hour).AddMinutes(addtime);
