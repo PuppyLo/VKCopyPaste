@@ -75,8 +75,11 @@ namespace VKTest
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.btn_AlbumGet = new System.Windows.Forms.Button();
             this.tabPage7 = new System.Windows.Forms.TabPage();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.button2 = new System.Windows.Forms.Button();
+            this.listBox2 = new System.Windows.Forms.ListBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -85,6 +88,7 @@ namespace VKTest
             this.tabPage3.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
+            this.tabPage8.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_GroupWallGet
@@ -247,12 +251,13 @@ namespace VKTest
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Controls.Add(this.tabPage7);
+            this.tabControl1.Controls.Add(this.tabPage8);
             this.tabControl1.Location = new System.Drawing.Point(12, 41);
             this.tabControl1.MinimumSize = new System.Drawing.Size(410, 357);
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(410, 358);
+            this.tabControl1.Size = new System.Drawing.Size(410, 449);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabControl1.TabIndex = 37;
             // 
@@ -268,7 +273,7 @@ namespace VKTest
             this.tabPage1.Location = new System.Drawing.Point(4, 40);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(402, 314);
+            this.tabPage1.Size = new System.Drawing.Size(402, 405);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Wall Get";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -283,10 +288,10 @@ namespace VKTest
             this.tabPage4.Controls.Add(this.txt_UserPhotoCount);
             this.tabPage4.Controls.Add(this.txt_UserPhotoOwnerID);
             this.tabPage4.Controls.Add(this.btn_UserPhotoGet);
-            this.tabPage4.Location = new System.Drawing.Point(4, 40);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(402, 314);
+            this.tabPage4.Size = new System.Drawing.Size(402, 423);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Photo Get";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -297,7 +302,7 @@ namespace VKTest
             | System.Windows.Forms.AnchorStyles.Left)));
             this.txt_UserPhotoAlbumID.Location = new System.Drawing.Point(6, 113);
             this.txt_UserPhotoAlbumID.Name = "txt_UserPhotoAlbumID";
-            this.txt_UserPhotoAlbumID.Size = new System.Drawing.Size(174, 195);
+            this.txt_UserPhotoAlbumID.Size = new System.Drawing.Size(174, 304);
             this.txt_UserPhotoAlbumID.TabIndex = 7;
             this.txt_UserPhotoAlbumID.Text = "";
             // 
@@ -374,7 +379,7 @@ namespace VKTest
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(402, 332);
+            this.tabPage5.Size = new System.Drawing.Size(402, 423);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Group ID";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -460,10 +465,10 @@ namespace VKTest
             this.tabPage2.Controls.Add(this.txt_WallPostDay);
             this.tabPage2.Controls.Add(this.label6);
             this.tabPage2.Controls.Add(this.txt_WallPostHours);
-            this.tabPage2.Location = new System.Drawing.Point(4, 40);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(402, 314);
+            this.tabPage2.Size = new System.Drawing.Size(402, 423);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Wall Post";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -476,7 +481,7 @@ namespace VKTest
             this.tabPage3.Controls.Add(this.btn_PhotoSave);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(402, 332);
+            this.tabPage3.Size = new System.Drawing.Size(402, 423);
             this.tabPage3.TabIndex = 6;
             this.tabPage3.Text = "Photo Save";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -505,7 +510,7 @@ namespace VKTest
             | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox2.Location = new System.Drawing.Point(3, 44);
             this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(396, 285);
+            this.richTextBox2.Size = new System.Drawing.Size(396, 394);
             this.richTextBox2.TabIndex = 1;
             this.richTextBox2.Text = "";
             // 
@@ -523,10 +528,10 @@ namespace VKTest
             // 
             this.tabPage6.Controls.Add(this.richTextBox1);
             this.tabPage6.Controls.Add(this.btn_AlbumGet);
-            this.tabPage6.Location = new System.Drawing.Point(4, 40);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(402, 314);
+            this.tabPage6.Size = new System.Drawing.Size(402, 423);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Album Get";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -556,21 +561,10 @@ namespace VKTest
             this.tabPage7.Location = new System.Drawing.Point(4, 40);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(402, 314);
+            this.tabPage7.Size = new System.Drawing.Size(402, 405);
             this.tabPage7.TabIndex = 7;
-            this.tabPage7.Text = "tabPage7";
+            this.tabPage7.Text = "Список фото";
             this.tabPage7.UseVisualStyleBackColor = true;
-            // 
-            // listBox1
-            // 
-            this.listBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(87, 5);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(309, 303);
-            this.listBox1.TabIndex = 0;
             // 
             // button1
             // 
@@ -582,11 +576,52 @@ namespace VKTest
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_2);
             // 
+            // listBox1
+            // 
+            this.listBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(87, 5);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(309, 394);
+            this.listBox1.TabIndex = 0;
+            // 
+            // tabPage8
+            // 
+            this.tabPage8.Controls.Add(this.listBox2);
+            this.tabPage8.Controls.Add(this.button2);
+            this.tabPage8.Location = new System.Drawing.Point(4, 40);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage8.Size = new System.Drawing.Size(402, 405);
+            this.tabPage8.TabIndex = 8;
+            this.tabPage8.Text = "Лайки";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(321, 6);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 0;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_2);
+            // 
+            // listBox2
+            // 
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.Location = new System.Drawing.Point(7, 4);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(308, 394);
+            this.listBox2.TabIndex = 1;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(434, 411);
+            this.ClientSize = new System.Drawing.Size(434, 502);
             this.Controls.Add(this.txt_SelectFolder);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btn_SelectFolder);
@@ -607,6 +642,7 @@ namespace VKTest
             this.tabPage3.PerformLayout();
             this.tabPage6.ResumeLayout(false);
             this.tabPage7.ResumeLayout(false);
+            this.tabPage8.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -661,6 +697,9 @@ namespace VKTest
         private System.Windows.Forms.TabPage tabPage7;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TabPage tabPage8;
+        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.Button button2;
     }
 }
 

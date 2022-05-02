@@ -25,14 +25,16 @@ namespace VKTest
             InitializeComponent();
 
             Authorization();
-            
-            if (Properties.Settings.Default.PathDirectory_Value == null)
-            {
-                Properties.Settings.Default.PathDirectory_Value = @"C:\";
-            }
-            
 
-            Environment.CurrentDirectory = Properties.Settings.Default.PathDirectory_Value;
+            try
+            {
+                Environment.CurrentDirectory = Properties.Settings.Default.PathDirectory_Value;
+            }
+
+            catch 
+            { 
+                Properties.Settings.Default.PathDirectory_Value = @"C:\"; 
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -137,10 +139,14 @@ namespace VKTest
 
             string[] second = Directory.GetFiles(txt_SelectFolder.Text); // путь к папке
 
+
             //for (int i = 0, j = second.Length; i <= 50; i ++,j--)//j = CountImage + 1; i <= 50; i++, j--)
-            for(int i = 0; i <= second.Length; i++)
+            for (int i = 0; i <= second.Length; i++)
             {
-                    addtime = i+1;
+
+                try
+                {
+                    addtime = i + 1;
                     addtime += i * 60;
                     date = new DateTime();
                     date = DateTime.Now.AddDays(Day).AddHours(Hour).AddMinutes(addtime);
@@ -166,18 +172,24 @@ namespace VKTest
 
                     //var time = TimeSpan.FromMinutes(30);
                     Thread.Sleep(500);
+                }
 
-                /*catch 
+                catch (Exception ex)
                 {
-                    (Exception ex)  var message = MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                    var message = MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+
                     if (message == DialogResult.OK)
-                    { continue; }
-                    else { break; }
-                break;
-                }*/
+                    { 
+                        continue; 
+                    }
 
+                    else 
+                    { 
+                        break; 
+                    }
+               
+                }
             }
-
         }
 
         #endregion
@@ -293,6 +305,12 @@ namespace VKTest
                 listBox1.Items.Add(second[i]);
             }
 
+        }
+
+        private void button2_Click_2(object sender, EventArgs e)
+        {
+            var fave = vkapi.Fave.Get(new VkNet.Model.RequestParams.Fave.FaveGetParams { Count = 100, ItemType = FaveType.Post, Extended = true}); 
+                listBox2.Items.Add(fave.Count);
         }
     }
 
