@@ -56,7 +56,7 @@ namespace VKTest
         {
             vkapi.Authorize(new ApiAuthParams()
             {
-                AccessToken = "efb526959fd9474509237898eb3a0888b2c120be2ba48a6f3c978a79d9997765f04f132cf3d61c1d650c3",
+                AccessToken = "db65a4f3bb0793f4b31910f1c1a3abaa2d5f07fb0f60b0f45e0161411299d9233ce48fb6cb705c4d2dc83",
                 ApplicationId = 7847742,
                 Settings = Settings.All,
                 
