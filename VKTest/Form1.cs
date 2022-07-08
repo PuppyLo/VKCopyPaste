@@ -41,12 +41,15 @@ namespace VKTest
         {
             txt_GroupWallGetOwnerID.Text = Properties.Settings.Default.RichTextBox_Value;
             txt_SelectFolder.Text = Properties.Settings.Default.PathDirectory_Value;
+            token_txt.Text = Properties.Settings.Default.token_Value;
+
         }
 
         private void Form1_FormClosing(Object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.RichTextBox_Value = txt_GroupWallGetOwnerID.Text;
             Properties.Settings.Default.PathDirectory_Value = txt_SelectFolder.Text;
+            Properties.Settings.Default.token_Value = token_txt.Text;
             Properties.Settings.Default.Save();
         }
 
@@ -56,7 +59,7 @@ namespace VKTest
         {
             vkapi.Authorize(new ApiAuthParams()
             {
-                AccessToken = "db65a4f3bb0793f4b31910f1c1a3abaa2d5f07fb0f60b0f45e0161411299d9233ce48fb6cb705c4d2dc83",
+                AccessToken = token_txt.Text,
                 ApplicationId = 7847742,
                 Settings = Settings.All,
                 
