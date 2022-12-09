@@ -29,6 +29,7 @@ namespace VKTest
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.btn_GroupWallGet = new System.Windows.Forms.Button();
             this.btn_WallPost = new System.Windows.Forms.Button();
             this.txt_GroupWallGetCount = new System.Windows.Forms.TextBox();
@@ -637,9 +638,7 @@ namespace VKTest
             this.token_txt.Name = "token_txt";
             this.token_txt.Size = new System.Drawing.Size(405, 20);
             this.token_txt.TabIndex = 39;
-            this.token_txt.Text = "vk1.a.kEiuulTV_fqRlpjgemgXzegdm_4W4GTMZCUDTtlGPFslhVykyOuiK7WTR9A5R5BNfh0mXiAGWTs" +
-    "97ZZtI_KjeJ0YkBcdGSlVkriMTp8fZzyeELg4Ju14xoR03UOZlhyEIrjbWykBRax-Q8roe4KHTtH6cMJ" +
-    "LFKoKUwQjjdeK676sgei177HLfd8Y_iaCg20l";
+            this.token_txt.Text = resources.GetString("token_txt.Text");
             // 
             // Form1
             // 

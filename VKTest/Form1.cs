@@ -13,12 +13,13 @@ using VkNet.Enums.Filters;
 using VkNet.Model;
 using VkNet.Model.Attachments;
 using VkNet.Model.RequestParams;
+using VkNet.Enums.SafetyEnums;
 
 namespace VKTest
 {
     public partial class Form1 : Form
     {
-        VkApi vkapi = new VkApi();
+        VkApi _vkapi = new VkApi();
 
         public Form1()
         {
@@ -31,9 +32,9 @@ namespace VKTest
                 Environment.CurrentDirectory = Properties.Settings.Default.PathDirectory_Value;
             }
 
-            catch 
-            { 
-                Properties.Settings.Default.PathDirectory_Value = @"C:\"; 
+            catch
+            {
+                Properties.Settings.Default.PathDirectory_Value = @"C:\";
             }
         }
 
@@ -55,21 +56,18 @@ namespace VKTest
 
         #region Auth
 
-        public void Authorization()
+        private void Authorization()
         {
-            vkapi.Authorize(new ApiAuthParams()
+            _vkapi.Authorize(new ApiAuthParams()
             {
                 AccessToken = token_txt.Text,
                 ApplicationId = 7847742,
                 Settings = Settings.All,
-                
             });
         }
-
         #endregion
 
         #region Select Folder
-
         private void button6_Click(object sender, EventArgs e)
         {
             string path = null;
@@ -83,7 +81,6 @@ namespace VKTest
         #endregion
 
         #region Wall Get
-
         public async Task<string> WallGet()
         {
             System.Drawing.Image img;
@@ -96,7 +93,7 @@ namespace VKTest
 
             for (int j = 0; j < GroupCount.Length; j++)
             {
-                var getwall = await vkapi.Wall.GetAsync(new WallGetParams { Count = CountPost, OwnerId = -GroupCount[j], Extended = true, Offset = Offset, Filter = VkNet.Enums.SafetyEnums.WallFilter.All });
+                var getwall = await _vkapi.Wall.GetAsync(new WallGetParams { Count = CountPost, OwnerId = -GroupCount[j], Extended = true, Offset = Offset, Filter = VkNet.Enums.SafetyEnums.WallFilter.All });
 
                 foreach (var item in getwall.WallPosts)
                 {
@@ -155,11 +152,11 @@ namespace VKTest
                     date = DateTime.Now.AddDays(Day).AddHours(Hour).AddMinutes(addtime);
 
                     var wc = new WebClient();
-                    var upServer = vkapi.Photo.GetWallUploadServer(GroupKyda);
+                    var upServer = _vkapi.Photo.GetWallUploadServer(GroupKyda);
                     var response = Encoding.ASCII.GetString(wc.UploadFile(upServer.UploadUrl, second[i])); //txt_SelectFolder.Text + j + @".jpg"));
-                    var photos = vkapi.Photo.SaveWallPhoto(response, null, (ulong)GroupKyda);
+                    var photos = _vkapi.Photo.SaveWallPhoto(response, null, (ulong)GroupKyda);
 
-                    vkapi.Wall.Post(new WallPostParams
+                    _vkapi.Wall.Post(new WallPostParams
                     {
                         OwnerId = -GroupKyda,
                         Attachments = photos,
@@ -182,15 +179,15 @@ namespace VKTest
                     var message = MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
 
                     if (message == DialogResult.OK)
-                    { 
-                        continue; 
+                    {
+                        continue;
                     }
 
-                    else 
-                    { 
-                        break; 
+                    else
+                    {
+                        break;
                     }
-               
+
                 }
             }
         }
@@ -211,7 +208,7 @@ namespace VKTest
 
         private void btn_UserPhotoGet_Click(object sender, EventArgs e)
         {
-            var photoGet = vkapi.Photo.Get(new PhotoGetParams { OwnerId = Convert.ToInt32(txt_UserPhotoOwnerID.Text), Count = (ulong)Convert.ToInt64(txt_UserPhotoCount.Text), Offset = (ulong)Convert.ToInt32(txt_UserPhotoOffset.Text), AlbumId = VkNet.Enums.SafetyEnums.PhotoAlbumType.Id(Convert.ToInt32(txt_UserPhotoAlbumID.Text)) });
+            var photoGet = _vkapi.Photo.Get(new PhotoGetParams { OwnerId = Convert.ToInt32(txt_UserPhotoOwnerID.Text), Count = (ulong)Convert.ToInt64(txt_UserPhotoCount.Text), Offset = (ulong)Convert.ToInt32(txt_UserPhotoOffset.Text), AlbumId = VkNet.Enums.SafetyEnums.PhotoAlbumType.Id(Convert.ToInt32(txt_UserPhotoAlbumID.Text)) });
             {
                 foreach (var photo in photoGet)
                 {
@@ -245,7 +242,12 @@ namespace VKTest
         {
             txt_UserGroupListOwnerID.Clear();
 
-            var groupGet = vkapi.Groups.Get(new GroupsGetParams { UserId = Convert.ToInt32(txt_UserGroupUserID.Text), Count = Convert.ToInt32(txt_UserGroupCount.Text), Offset = Convert.ToInt32(txt_UserGroupOffset.Text) });
+            var groupGet = _vkapi.Groups.Get(new GroupsGetParams
+            {
+                UserId = Convert.ToInt32(txt_UserGroupUserID.Text),
+                Count = Convert.ToInt32(txt_UserGroupCount.Text),
+                Offset = Convert.ToInt32(txt_UserGroupOffset.Text)
+            });
 
             foreach (var group in groupGet)
             {
@@ -258,7 +260,7 @@ namespace VKTest
         #region GetAlbums
         private void button1_Click_1(object sender, EventArgs e)
         {
-            var AlbumId = vkapi.Photo.GetAlbums(new PhotoGetAlbumsParams { OwnerId = -192785852 });
+            var AlbumId = _vkapi.Photo.GetAlbums(new PhotoGetAlbumsParams { OwnerId = -192785852 });
             foreach (var ID in AlbumId)
             {
                 richTextBox1.Text += ID.Title + ": " + ID.Id + "\n";
@@ -281,9 +283,9 @@ namespace VKTest
                     var albumID = Convert.ToInt32(txt_PhotoSaveAlbumID.Text);
                     var groupID = 192785852;
 
-                    var uploadServer = vkapi.Photo.GetUploadServer(albumID, groupID);
+                    var uploadServer = _vkapi.Photo.GetUploadServer(albumID, groupID);
                     var response = Encoding.ASCII.GetString(wc.UploadFile(uploadServer.UploadUrl, Environment.CurrentDirectory + "/" + i + @".jpg"));
-                    var attachment = vkapi.Photo.Save(new PhotoSaveParams { GroupId = groupID, AlbumId = albumID, SaveFileResponse = response });
+                    var attachment = _vkapi.Photo.Save(new PhotoSaveParams { GroupId = groupID, AlbumId = albumID, SaveFileResponse = response });
                     richTextBox2.Text = i + "/" + CountImage;
                 }
                 catch
@@ -300,7 +302,7 @@ namespace VKTest
         private void button1_Click_2(object sender, EventArgs e)
         {
             string[] second = Directory.GetFiles(Properties.Settings.Default.PathDirectory_Value);
-            
+
             second = second.OrderBy(s => s.Length).ToArray();
 
             for (int i = 0; i < 45; i++)
@@ -312,8 +314,8 @@ namespace VKTest
 
         private void button2_Click_2(object sender, EventArgs e)
         {
-            var fave = vkapi.Fave.Get(new VkNet.Model.RequestParams.Fave.FaveGetParams { Count = 100, ItemType = FaveType.Post, Extended = true}); 
-                listBox2.Items.Add(fave.Count);
+            var fave = _vkapi.Fave.Get(new VkNet.Model.RequestParams.Fave.FaveGetParams { Count = 100, ItemType = FaveType.Post, Extended = true });
+            listBox2.Items.Add(fave.Count);
         }
     }
 
