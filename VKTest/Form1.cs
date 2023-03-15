@@ -13,10 +13,10 @@ using VkNet.Enums.Filters;
 using VkNet.Model;
 using VkNet.Model.Attachments;
 using VkNet.Model.RequestParams;
-using VkNet.Enums.SafetyEnums;
 
 namespace VKTest
 {
+
     public partial class Form1 : Form
     {
         VkApi _vkapi = new VkApi();
@@ -56,11 +56,10 @@ namespace VKTest
 
         #region Auth
 
-        private void Authorization()
-        {
-            _vkapi.Authorize(new ApiAuthParams()
-            {
-                AccessToken = token_txt.Text,
+        private void Authorization() {
+            _vkapi.Authorize(new ApiAuthParams() {
+                //AccessToken = token_txt.Text,]
+                AccessToken = "vk1.a.xHsoqivp6sLZ3By2jMkJCG-tseujDy7DdXJGcSQzPyn7xee56La4ehkR_sx9-RYh8MsG32C4j6xcbhzl6uB41atrKu1lAHkGOHVuT9VREeujSnQNup8QDyog8S1GhW6Z3kitBB5ZZRLeE9H8eyIo161-wAl8-skmyeWy3V8MTupnvgO9AANr8mr0rUEq3xTNOFwH7fEMZZE_vJhwTgB3ng",
                 ApplicationId = 7847742,
                 Settings = Settings.All,
             });
@@ -130,7 +129,7 @@ namespace VKTest
         public void WallPost()
         {
             var GroupKyda = Convert.ToInt64(txt_WallPostOwnerID.Text);
-            var CountImage = new DirectoryInfo(Environment.CurrentDirectory).GetFiles().Length;
+            //var CountImage = new DirectoryInfo(Environment.CurrentDirectory).GetFiles().Length;
             var Day = Convert.ToSByte(txt_WallPostDay.Text);
             var Hour = Convert.ToSByte(txt_WallPostHours.Text);
 
